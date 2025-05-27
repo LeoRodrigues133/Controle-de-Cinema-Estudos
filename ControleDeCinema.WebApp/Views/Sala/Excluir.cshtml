@@ -1,0 +1,45 @@
+﻿@model ExcluirSalaViewModel;
+
+@{
+    ViewBag.Title = "Excluir Sala";
+    Layout = "_Layout";
+}
+
+<div class="container mt-5">
+    <h1 class="text-danger fw-bold">@ViewBag.Title</h1>
+    <hr class="border border-danger" />
+
+    <div class="alert alert-warning">
+        <h4 class="alert-heading">Tem certeza que deseja excluir esta sala?</h4>
+        <p>Essa ação <strong>não poderá ser desfeita</strong>.</p>
+    </div>
+
+    <div class="card border-danger mb-4">
+        <div class="card-header bg-danger text-white fw-bold">
+            Dados da Sala
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">ID</dt>
+                <dd class="col-sm-9">@Model.Id</dd>
+
+                <dt class="col-sm-3">Nome</dt>
+                <dd class="col-sm-9">@Model.Nome</dd>
+
+                <dt class="col-sm-3">Capacidade</dt>
+                <dd class="col-sm-9">@Model.Capacidade lugares</dd>
+            </dl>
+        </div>
+    </div>
+
+    <form asp-action="Excluir" method="post">
+        <input type="hidden" asp-for="Id" />
+
+        <button type="submit" class="btn btn-danger">
+            <i class="bi bi-trash-fill"></i> Confirmar Exclusão
+        </button>
+        <a asp-action="Listar" class="btn btn-secondary ms-2">
+            <i class="bi bi-x-circle"></i> Cancelar
+        </a>
+    </form>
+</div>

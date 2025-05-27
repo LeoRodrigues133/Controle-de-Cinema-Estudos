@@ -1,0 +1,28 @@
+﻿@model DetalhesSalaViewModel
+
+@{
+    ViewBag.Title = "Detalhes da Sala";
+    Layout = "_Layout";
+}
+
+<div class="card">
+    <div class="card-header">
+    </div>
+
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">ID:</dt>
+            <dd class="col-sm-9">@Model.Id</dd>
+
+            <dt class="col-sm-3">Nome:</dt>
+            <dd class="col-sm-9">@Model.Nome</dd>
+
+            <dt class="col-sm-3">Capacidade:</dt>
+            <dd class="col-sm-9">@Model.Capacidade</dd>
+        </dl>
+
+        <div class="d-flex justify-content-end">
+            <a asp-action="Listar" class="btn btn-secondary">Voltar</a>
+        </div>
+    </div>
+</div>
