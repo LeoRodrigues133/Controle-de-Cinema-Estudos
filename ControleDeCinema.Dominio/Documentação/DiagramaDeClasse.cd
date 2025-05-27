@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ControleDeCinema.Domínio.Assento" Collapsed="true">
+    <Position X="7" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Módulo Assento\Assento.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ControleDeCinema.Domínio.Sessão" Collapsed="true">
+    <Position X="7" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Módulo Sessão\Sessão.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ControleDeCinema.Domínio.Sala" Collapsed="true">
+    <Position X="10.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Módulo Sala\Sala.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ControleDeCinema.Domínio.Categoria" Collapsed="true">
+    <Position X="8.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Módulo Categoria\Categoria.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ControleDeCinema.Domínio.Filme" Collapsed="true">
+    <Position X="7" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Módulo Filme\Filme.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ControleDeCinema.Domínio.Ingresso" Collapsed="true">
+    <Position X="8.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Módulo Ingresso\Ingresso.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Yu Gothic" Size="10" />
+</ClassDiagram>
