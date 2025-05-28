@@ -1,0 +1,32 @@
+﻿@model DetalhesFilmeViewModel
+
+@{
+    ViewBag.Title = "Detalhes do Filme";
+    Layout = "_Layout";
+}
+
+<div class="card">
+    <div class="card-header bg-primary text-white">
+        <h4 class="mb-0">Detalhes do Filme</h4>
+    </div>
+
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">ID</dt>
+            <dd class="col-sm-9">@Model.Id</dd>
+
+            <dt class="col-sm-3">Nome</dt>
+            <dd class="col-sm-9">@Model.Nome</dd>
+
+            <dt class="col-sm-3">Duração (minutos)</dt>
+            <dd class="col-sm-9">@Model.Duracao</dd>
+
+            <dt class="col-sm-3">Categoria</dt>
+            <dd class="col-sm-9">@Model.CategoriaNome</dd>
+        </dl>
+
+        <div class="d-flex justify-content-end">
+            <a asp-action="Listar" class="btn btn-secondary">Voltar</a>
+        </div>
+    </div>
+</div>
