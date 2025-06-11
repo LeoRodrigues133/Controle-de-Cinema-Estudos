@@ -8,13 +8,20 @@ public class FilmeProfile : Profile
 {
     public FilmeProfile()
     {
-        CreateMap<Filme, ListarFilmeViewModel>();
-        CreateMap<Filme, EditarFilmeViewModel>();
-        CreateMap<Filme, DetalhesFilmeViewModel>();
-        CreateMap<Filme, ExcluirFilmeViewModel>();
+        CreateMap<Filme, ListarFilmeViewModel>()
+            .ForMember(x => x.Categoria, dest => dest.MapFrom(src => src.Categoria));
 
-        CreateMap<CadastrarFilmeViewModel, Filme>();
-        CreateMap<EditarFilmeViewModel, Filme>();
+        CreateMap<Filme, EditarFilmeViewModel>();
+
+        CreateMap<Filme, DetalhesFilmeViewModel>()
+            .ForMember(x => x.Categoria, dest => dest.MapFrom(src => src.Categoria));
+
+        CreateMap<Filme, ExcluirFilmeViewModel>()
+            .ForMember(x => x.Categoria, dest => dest.MapFrom(src => src.Categoria));
+
+        CreateMap<FilmeFormViewModel, Filme>();
+        CreateMap<EditarFilmeViewModel, Filme>()
+            .ForMember(x => x.Categoria, dest => dest.MapFrom(src => src.Categoria));
 
     }
 }

@@ -26,6 +26,5 @@ public class MapeadorSala : IEntityTypeConfiguration<Sala>
             .IsRequired()
             .HasColumnType("bit");
 
-        //builder.HasKey(s => s.Id);
     }
 }

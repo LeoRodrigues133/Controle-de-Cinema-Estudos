@@ -51,7 +51,7 @@ public class FilmeController : WebController
 
         var filme = resultado.Value;
 
-        if (filme == null)
+        if (filme is null)
             MensagemRegistroNaoEncontrado(id);
 
         var detalhesVm = _mapper.Map<DetalhesFilmeViewModel>(filme);
@@ -61,17 +61,15 @@ public class FilmeController : WebController
 
     public IActionResult Cadastrar()
     {
-
-
         return View(CarregarDados());
     }
 
 
     [HttpPost]
-    public IActionResult Cadastrar(CadastrarFilmeViewModel cadastrarVm)
+    public IActionResult Cadastrar(FilmeFormViewModel cadastrarVm)
     {
         if (!ModelState.IsValid)
-            return View(cadastrarVm);
+            return View(CarregarDados(cadastrarVm));
 
         var filme = _mapper.Map<Filme>(cadastrarVm);
 
@@ -86,7 +84,7 @@ public class FilmeController : WebController
 
         ApresentarMensagemSucesso($"O filme ID [{filme.Id}] foi cadastrado com sucesso!");
 
-        return View("Home", "Index");
+        return RedirectToAction(nameof(Listar));
     }
 
     public IActionResult Editar(int id)
@@ -102,17 +100,20 @@ public class FilmeController : WebController
 
         var filme = resultado.Value;
 
+        if (filme is null)
+            MensagemRegistroNaoEncontrado(id);
+
         var editarVm = _mapper.Map<EditarFilmeViewModel>(filme);
 
         return View(CarregarDados(editarVm));
     }
 
     [HttpPost]
-    public IActionResult Editar(EditarFilmeViewModel editarVm)
+    public IActionResult Editar(FilmeFormViewModel editarVm)
     {
 
         if (!ModelState.IsValid)
-            return View(editarVm);
+            return View(CarregarDados(editarVm));
 
         var filme = _mapper.Map<Filme>(editarVm);
 
@@ -143,6 +144,9 @@ public class FilmeController : WebController
 
         var filme = resultado.Value;
 
+        if (filme is null)
+            MensagemRegistroNaoEncontrado(id);
+
         var excluirVm = _mapper.Map<ExcluirFilmeViewModel>(filme);
 
         return View(excluirVm);
@@ -151,9 +155,6 @@ public class FilmeController : WebController
     [HttpPost]
     public IActionResult Excluir(ExcluirFilmeViewModel excluirVm)
     {
-        if (!ModelState.IsValid)
-            return View(excluirVm);
-
         var resultado = _filmeService.Excluir(excluirVm.Id);
 
         if (resultado.IsFailed)
@@ -168,22 +169,12 @@ public class FilmeController : WebController
         return RedirectToAction(nameof(Listar));
     }
 
-    private SelectListItemViewModel? CarregarDados(SelectListItemViewModel? Dados = null)
+    private FilmeFormViewModel? CarregarDados(FilmeFormViewModel? Dados = null)
     {
-        var resultado = _categoriaService.SelecionarTodos();
-
-        if (resultado.IsFailed)
-        {
-            ApresentarMensagemFalha(resultado.ToResult());
-
-            return null;
-        }
-
-        var categorias = resultado.Value;
+        var categorias = _categoriaService.SelecionarTodos().Value;
 
         if (Dados is null)
-            Dados = new SelectListItemViewModel();
-
+            Dados = new FilmeFormViewModel();
 
         Dados.Categorias = categorias.Select(c => new SelectListItem(c.Nome, c.Id.ToString()));
 

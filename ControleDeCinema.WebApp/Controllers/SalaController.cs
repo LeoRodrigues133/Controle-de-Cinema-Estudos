@@ -48,7 +48,7 @@ public class SalaController : WebController
 
         var sala = resultado.Value;
 
-        if (sala == null)
+        if (sala is null)
             return MensagemRegistroNaoEncontrado(id);
 
         var detalhesVm = _mapeador.Map<DetalhesSalaViewModel>(sala);
@@ -97,7 +97,7 @@ public class SalaController : WebController
 
         var sala = resultado.Value;
 
-        if (sala == null)
+        if (sala is null)
             return MensagemRegistroNaoEncontrado(id);
 
         var editarVm = _mapeador.Map<EditarSalaViewModel>(sala);
@@ -138,6 +138,9 @@ public class SalaController : WebController
         }
 
         var sala = resultado.Value;
+
+        if (sala is null)
+            return MensagemRegistroNaoEncontrado(id);
 
         var excluirVm = _mapeador.Map<ExcluirSalaViewModel>(sala);
 

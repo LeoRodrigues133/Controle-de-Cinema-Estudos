@@ -47,10 +47,10 @@ public class CategoriaController : WebController
 
         var categoria = resultado.Value;
 
-        if (categoria == null)
+        if (categoria is null)
             return MensagemRegistroNaoEncontrado(id);
 
-        var detalhesVm = _mapper.Map<Categoria>(categoria);
+        var detalhesVm = _mapper.Map<DetalhesCategoriaViewModel>(categoria);
 
         return View(detalhesVm);
     }
@@ -95,6 +95,9 @@ public class CategoriaController : WebController
 
         var categoria = resultado.Value;
 
+        if (categoria is null)
+            MensagemRegistroNaoEncontrado(id);
+
         var categoriaVM = _mapper.Map<EditarCategoriaViewModel>(categoria);
 
         return View(categoriaVM);
@@ -134,6 +137,9 @@ public class CategoriaController : WebController
         }
 
         var categoria = resultado.Value;
+
+        if (categoria is null)
+            MensagemRegistroNaoEncontrado(id);
 
         var categoriaVM = _mapper.Map<ExcluirCategoriaViewModel>(categoria);
 

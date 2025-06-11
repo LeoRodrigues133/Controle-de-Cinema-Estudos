@@ -4,6 +4,7 @@ using ControleDeCinema.Infra.Compartilhado;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ControleDeCinema.Infra.Migrations
 {
     [DbContext(typeof(CinemaDbContext))]
-    partial class CinemaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250608214146_Corrigindo")]
+    partial class Corrigindo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -75,6 +78,9 @@ namespace ControleDeCinema.Infra.Migrations
                     b.Property<int>("CategoriaId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("CategoriaId1")
+                        .HasColumnType("int");
+
                     b.Property<int>("Duracao")
                         .HasColumnType("int");
 
@@ -85,6 +91,10 @@ namespace ControleDeCinema.Infra.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CategoriaId");
+
+                    b.HasIndex("CategoriaId1")
+                        .IsUnique()
+                        .HasFilter("[CategoriaId1] IS NOT NULL");
 
                     b.ToTable("TB_FILME", (string)null);
                 });
@@ -129,7 +139,7 @@ namespace ControleDeCinema.Infra.Migrations
                     b.Property<bool>("Finalizada")
                         .HasColumnType("bit");
 
-                    b.Property<TimeSpan>("HorarioDaSessao")
+                    b.Property<TimeSpan>("HoraDeExibicao")
                         .HasColumnType("time");
 
                     b.Property<int>("SalaId")
@@ -163,6 +173,10 @@ namespace ControleDeCinema.Infra.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("ControleDeCinema.Domínio.Categoria", null)
+                        .WithOne("Filme")
+                        .HasForeignKey("ControleDeCinema.Domínio.Filme", "CategoriaId1");
+
                     b.Navigation("Categoria");
                 });
 
@@ -183,6 +197,11 @@ namespace ControleDeCinema.Infra.Migrations
                     b.Navigation("Filme");
 
                     b.Navigation("Sala");
+                });
+
+            modelBuilder.Entity("ControleDeCinema.Domínio.Categoria", b =>
+                {
+                    b.Navigation("Filme");
                 });
 
             modelBuilder.Entity("ControleDeCinema.Domínio.Sessão", b =>

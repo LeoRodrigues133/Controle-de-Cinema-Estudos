@@ -5,7 +5,7 @@
 namespace ControleDeCinema.Infra.Migrations
 {
     /// <inheritdoc />
-    public partial class migrationfilme : Migration
+    public partial class Assentos : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

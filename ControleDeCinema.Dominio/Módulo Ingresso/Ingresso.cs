@@ -5,9 +5,9 @@ using System.Text;
 
 namespace ControleDeCinema.Domínio;
 
-public class Ingresso
+public class Ingresso : EntidadeBase
 {
     public int Id { get; set; }
     public Assento Assento { get; set; }
-    
+
 }

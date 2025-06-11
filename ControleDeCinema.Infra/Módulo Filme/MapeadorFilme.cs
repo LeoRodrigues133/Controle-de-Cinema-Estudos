@@ -1,5 +1,4 @@
-﻿
-using ControleDeCinema.Domínio;
+﻿using ControleDeCinema.Domínio;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -22,9 +21,9 @@ public class MapeadorFilme : IEntityTypeConfiguration<Filme>
             .HasColumnType("int")
             .IsRequired();
 
-        builder.Property(x => x.CategoriaId)
-            .HasColumnType("int")
-            .IsRequired();
+        builder.HasOne(x => x.Categoria)
+            .WithMany()
+            .HasForeignKey(x => x.CategoriaId);
 
         builder.Property(x => x.CategoriaId)
             .HasColumnType("int")

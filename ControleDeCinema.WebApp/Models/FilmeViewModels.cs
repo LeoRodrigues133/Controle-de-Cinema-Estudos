@@ -3,9 +3,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ControleDeCinema.WebApp.Models;
 
-public class SelectListItemViewModel
+public class FilmeFormViewModel
 {
     public IEnumerable<SelectListItem>? Categorias { get; set; }
+    public string Nome { get; set; }
+    public int Duracao { get; set; }
+    public int CategoriaId { get; set; }
 
 }
 public class ListarFilmeViewModel
@@ -13,14 +16,13 @@ public class ListarFilmeViewModel
     public int Id { get; set; }
     public string Nome { get; set; }
     public int Duracao { get; set; }
+    public Categoria Categoria { get; set; }
 }
 
-public class EditarFilmeViewModel : SelectListItemViewModel
+public class EditarFilmeViewModel : FilmeFormViewModel
 {
     public int Id { get; set; }
-    public string Nome { get; set; }
-    public int Duracao { get; set; }
-    public int CategoriaId { get; set; }
+    public Categoria Categoria { get; set; }
 
 }
 
@@ -29,19 +31,17 @@ public class ExcluirFilmeViewModel
     public int Id { get; set; }
     public string Nome { get; set; }
     public int Duracao { get; set; }
-    public int CategoriaNome { get; set; }
+    public Categoria Categoria { get; set; }
 }
 public class DetalhesFilmeViewModel
 {
     public int Id { get; set; }
     public string Nome { get; set; }
     public int Duracao { get; set; }
-    public string CategoriaNome { get; set; }
+    public Categoria Categoria { get; set; }
 }
 
-public class CadastrarFilmeViewModel : SelectListItemViewModel
+public class CadastrarFilmeViewModel : FilmeFormViewModel
 {
-    public string Nome { get; set; }
-    public int Duracao { get; set; }
-    public int CategoriaId { get; set; }
+
 }
