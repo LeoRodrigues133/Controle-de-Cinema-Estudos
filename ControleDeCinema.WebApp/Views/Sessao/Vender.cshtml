@@ -1,0 +1,52 @@
+﻿@model VenderSessaoViewModel
+
+@{
+    ViewBag.Title = "Venda de Ingressos";
+    Layout = "_Layout";
+}
+
+
+<div class="card bg-dark text-white p-4 mt-3">
+    <form asp-action="Vender" method="post">
+        <input type="hidden" asp-for="Id" />
+
+        <dl class="row">
+            <dt class="col-sm-3">Filme</dt>
+            <dd class="col-sm-9">@Model.Filme.Nome</dd>
+
+            <dt class="col-sm-3">Sala</dt>
+            <dd class="col-sm-9">@Model.Sala.Nome</dd>
+
+            <dt class="col-sm-3">Data de Exibição</dt>
+            <dd class="col-sm-9">@Model.DataDeExibicao.ToString("dd/MM/yyyy")</dd>
+
+            <dt class="col-sm-3">Horário da Sessão</dt>
+            <dd class="col-sm-9">@Model.HorarioDaSessao.ToString(@"hh\:mm")</dd>
+        </dl>
+
+
+        <div class="mt-4 mb-3">
+            <label class="form-label">Selecione os Assentos:</label>
+            <div class="d-flex flex-wrap gap-2">
+                @foreach (var assento in Model.Assentos)
+                {
+                    <div class="form-check">
+                        <input class="form-check-input assento-checkbox" type="checkbox" name="AssentosSelecionados" hidden
+                               value="@assento.Id" id="assento-@assento.Id" data-id="@assento.Id"
+                        @(assento.Disponivel ? "disabled" : "") />
+                        <label class="form-check-label text-white" for="assento-@assento.Id">
+                            <i class="bi bi-person-fill icone-assento-@assento.Id @(assento.Disponivel ? "text-danger" : "text-success")"></i>
+                            @assento.Numero
+                        </label>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-success">Confirmar Venda</button>
+        <a asp-action="Listar" class="btn btn-secondary ms-2">Cancelar</a>
+    </form>
+</div>
+
+@section Scripts {
+}

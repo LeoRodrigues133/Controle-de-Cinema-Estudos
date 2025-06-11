@@ -1,9 +1,11 @@
 using ControleDeCinema.Aplicação;
 using ControleDeCinema.Domínio;
+using ControleDeCinema.Domínio.Módulo_Sessão;
 using ControleDeCinema.Infra.Compartilhado;
 using ControleDeCinema.Infra.Módulo_Categoria;
 using ControleDeCinema.Infra.Módulo_Filme;
 using ControleDeCinema.Infra.Módulo_Sala;
+using ControleDeCinema.Infra.Módulo_Sessão;
 using ControleDeCinema.WebApp.Mapping.Resolvers;
 using System.Reflection;
 
@@ -21,6 +23,7 @@ public class Program
         builder.Services.AddScoped<IRepositorioSala, RepositorioDeSalaOrm>();
         builder.Services.AddScoped<IRepositorioCategoria, RepositorioCategoriaEmOrm>();
         builder.Services.AddScoped<IRepositorioFilme, RepositorioFilmeEmOrm>();
+        builder.Services.AddScoped<IRepositorioSessao,RepositorioSessaoEmOrm>();
 
         builder.Services.AddScoped<SalaResolver>();
         builder.Services.AddScoped<CategoriaResolver>();
@@ -29,6 +32,7 @@ public class Program
         builder.Services.AddScoped<SalaService>();
         builder.Services.AddScoped<CategoriaService>();
         builder.Services.AddScoped<FilmeService>();
+        builder.Services.AddScoped<SessaoService>();
 
         builder.Services.AddAutoMapper(config =>
         {

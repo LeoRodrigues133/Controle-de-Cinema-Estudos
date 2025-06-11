@@ -1,0 +1,58 @@
+﻿@model SessaoFormViewModel
+
+@{
+    ViewBag.Title = "Cadastrar Sessão";
+    Layout = "_Layout";
+}
+
+<h2>Cadastrar Sessão</h2>
+
+<form asp-action="Cadastrar" method="post">
+    <div class="card p-4">
+
+        <div class="mb-3">
+            <label asp-for="FilmeId" class="form-label">Filme</label>
+            <select asp-for="FilmeId" class="form-select" asp-items="Model.Filmes">
+                <option value="">Selecione um filme</option>
+            </select>
+            <span asp-validation-for="FilmeId" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="SalaId" class="form-label">Sala</label>
+            <select asp-for="SalaId" class="form-select" asp-items="Model.Salas">
+                <option value="">Selecione uma sala</option>
+            </select>
+            <span asp-validation-for="SalaId" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3 w-100 d-flex justify-between">
+            <div>
+                <label asp-for="DataDeExibicao" class="form-label">Data da Exibição</label>
+                <input asp-for="DataDeExibicao"
+                       min="@DateTime.Today"
+                       value="@DateTime.Today"
+                       type="date" class="form-control" />
+                <span asp-validation-for="DataDeExibicao" class="text-danger"></span>
+            </div>
+
+            <div>
+                <label asp-for="HorarioDaSessao" class="form-label">Horário da Exibição</label>
+                <input asp-for="HorarioDaSessao"
+                       min="@TimeOnly.MinValue"
+                       value="@Model.HorarioDaSessao"
+                       type="time" class="form-control" />
+                <span asp-validation-for="HorarioDaSessao" class="text-danger"></span>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Salvar</button>
+        <a asp-action="Listar" class="btn btn-secondary">Cancelar</a>
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

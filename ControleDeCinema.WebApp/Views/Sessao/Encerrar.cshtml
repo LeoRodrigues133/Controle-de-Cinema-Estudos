@@ -1,0 +1,25 @@
+﻿@model EncerrarSessaoViewModel
+
+@{
+    ViewBag.Title = "Finalizar Sessão";
+    Layout = "_Layout";
+}
+
+<div class="alert alert-warning text-dark">
+    <strong>Atenção:</strong> Você está prestes a finalizar esta sessão. Esta ação é irreversível.
+</div>
+
+<div class="card text-white bg-dark mb-3">
+    <div class="card-header">Informações da Sessão</div>
+    <div class="card-body">
+        <p><strong>Filme:</strong> @Model.Filme.Nome</p>
+        <p><strong>Sala:</strong> @Model.Sala.Nome</p>
+        <p><strong>Data:</strong> @Model.DataDeExibicao.ToString("dd/MM/yyyy")</p>
+        <p><strong>Horário:</strong> @Model.HorarioDaSessao.ToString(@"hh\:mm")</p>
+    </div>
+</div>
+
+<form asp-action="Encerrar" asp-route-id="@Model.Id">
+    <button type="submit" class="btn btn-danger">Encerrar Sessão</button>
+    <a asp-action="Listar" class="btn btn-secondary">Cancelar</a>
+</form>

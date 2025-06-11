@@ -1,4 +1,6 @@
 ﻿using ControleDeCinema.Domínio;
+using ControleDeCinema.Infra.Módulo_Assento;
+using ControleDeCinema.Infra.Módulo_Sessão;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -8,6 +10,8 @@ public class CinemaDbContext : DbContext
     public DbSet<Sala> Salas { get; set; }
     public DbSet<Categoria> Categorias { get; set; }
     public DbSet<Filme> Filmes { get; set; }
+    public DbSet<Assento> Assentos { get; set; }
+    public DbSet<Sessão> Sessaos { get; internal set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -48,6 +52,8 @@ public class CinemaDbContext : DbContext
         modelBuilder.ApplyConfiguration(new MapeadorSala());
         modelBuilder.ApplyConfiguration(new MapeadorCategoria());
         modelBuilder.ApplyConfiguration(new MapeadorFilme());
+        modelBuilder.ApplyConfiguration(new MapeamentoAssento());
+        modelBuilder.ApplyConfiguration(new MapeamentoSessao());
 
         base.OnModelCreating(modelBuilder);
     }

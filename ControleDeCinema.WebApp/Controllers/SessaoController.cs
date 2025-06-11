@@ -1,0 +1,260 @@
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using ControleDeCinema.Domínio;
+using ControleDeCinema.Aplicação;
+using ControleDeCinema.WebApp.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using ControleDeCinema.WebApp.Controllers.Compartilhado;
+
+namespace ControleDeCinema.WebApp.Controllers;
+public class SessaoController : WebController
+{
+    readonly SessaoService _sessaoService;
+    readonly FilmeService _filmeService;
+    readonly SalaService _salaService;
+    readonly IMapper _mapper;
+
+    public SessaoController(
+        SessaoService sessaoService,
+        FilmeService filmeService,
+        SalaService salaService,
+        IMapper mapper
+        )
+    {
+        _sessaoService = sessaoService;
+        _filmeService = filmeService;
+        _salaService = salaService;
+        _mapper = mapper;
+    }
+
+    public IActionResult Listar()
+    {
+        var resultado = _sessaoService.SelecionarTodos();
+
+        if (resultado.IsFailed)
+        {
+            ApresentarMensagemFalha(resultado.ToResult());
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        var sessaos = resultado.Value;
+
+        var listarVm = _mapper.Map<IEnumerable<ListarSessaoViewModel>>(sessaos);
+
+        return View(listarVm);
+    }
+
+    public IActionResult Detalhes(int id)
+    {
+        var resultado = _sessaoService.SelecionarPorId(id);
+
+        if (resultado.IsFailed)
+        {
+            ApresentarMensagemFalha(resultado.ToResult());
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        var sessao = resultado.Value;
+
+        var detalhesVm = _mapper.Map<DetalhesSessaoViewModel>(sessao);
+
+        return View(detalhesVm);
+    }
+
+    public IActionResult Cadastrar()
+    {
+        return View(CarregarDados());
+    }
+
+    [HttpPost]
+    //[ValidateAntiForgeryToken]
+    public IActionResult Cadastrar(SessaoFormViewModel cadastrasVM)
+    {
+        if (!ModelState.IsValid)
+            return View(CarregarDados(cadastrasVM));
+
+        var sessao = _mapper.Map<Sessão>(cadastrasVM);
+
+        var resultado = _sessaoService.Cadastrar(sessao);
+
+        if (resultado.IsFailed)
+        {
+            ApresentarMensagemFalha(resultado.ToResult());
+
+            return View(CarregarDados(cadastrasVM));
+        }
+
+        ApresentarMensagemSucesso($"A Sessão ID [{sessao.Id}] foi cadastrado com sucesso!");
+
+        return RedirectToAction(nameof(Listar));
+    }
+    public IActionResult Editar(int id)
+    {
+        var resultado = _sessaoService.SelecionarPorId(id);
+
+        if (resultado.IsFailed)
+        {
+            ApresentarMensagemFalha(resultado.ToResult());
+
+            return View("Home", "Index");
+        }
+        var sessao = resultado.Value;
+
+        if (sessao is null)
+            MensagemRegistroNaoEncontrado(id);
+
+        var editarVm = _mapper.Map<SessaoFormViewModel>(sessao);
+
+        return View(CarregarDados(editarVm));
+    }
+
+    [HttpPost]
+    //[ValidateAntiForgeryToken]
+    public IActionResult Editar(SessaoFormViewModel editarVm)
+    {
+        if (!ModelState.IsValid)
+            return View(CarregarDados(editarVm));
+
+        var sessao = _mapper.Map<Sessão>(editarVm);
+
+        var resultado = _sessaoService.Editar(sessao);
+
+        if (resultado.IsFailed)
+        {
+            ApresentarMensagemFalha(resultado.ToResult());
+
+            return View(CarregarDados(editarVm));
+        }
+
+        ApresentarMensagemSucesso($"A Sessão ID [{sessao.Id}] foi editada com sucesso!");
+
+        return RedirectToAction(nameof(Listar));
+    }
+
+    public IActionResult Vender(int id)
+    {
+        var resultado = _sessaoService.SelecionarPorId(id);
+
+        if (resultado.IsFailed)
+        {
+            ApresentarMensagemFalha(resultado.ToResult());
+
+            return View("Home", "Index");
+        }
+
+
+        var sessao = resultado.Value;
+
+        if (sessao is null)
+            MensagemRegistroNaoEncontrado(id);
+
+        var vIngressosVm = _mapper.Map<VenderSessaoViewModel>(sessao);
+
+        return View(vIngressosVm);
+    }
+
+    [HttpPost]
+    public IActionResult Vender(int id, List<int> assentosSelecionados)
+    {
+        var resultado = _sessaoService.SelecionarPorId(id);
+
+        if (resultado.IsFailed)
+        {
+            ApresentarMensagemFalha(resultado.ToResult());
+
+            return RedirectToAction(nameof(Listar));
+        }
+
+        var sessao = resultado.Value;
+
+        var resultadoEdicao = _sessaoService.ConfirmarVenda(sessao, assentosSelecionados);
+
+        var vendaVm = _mapper.Map<VenderSessaoViewModel>(sessao);
+
+        if (resultadoEdicao.IsFailed)
+        {
+            ApresentarMensagemFalha(resultadoEdicao.ToResult());
+
+            return RedirectToAction(nameof(Listar));
+        }
+
+        ApresentarMenssagemDeVenda(assentosSelecionados, sessao);
+
+        return View(vendaVm);
+    }
+
+    private void ApresentarMenssagemDeVenda(List<int> assentosSelecionados, Sessão sessao)
+    {
+        List<string> assentosVendidos = new List<string>();
+
+
+        foreach (var a in assentosSelecionados)
+        {
+            var assento = sessao.Assentos.Find(assento => assento.Id == a)!.Numero;
+
+            assentosVendidos.Add(assento);
+
+        }
+        var plural = assentosVendidos.Count > 1 ? "s" : "";
+
+        ApresentarMensagemSucesso($"Assento{plural} [{string.Join(", ", assentosVendidos)}] vendido{plural} para [{sessao.Filme?.Nome}]!");
+    }
+
+    public IActionResult Encerrar(int id)
+    {
+        var resultado = _sessaoService.SelecionarPorId(id);
+
+        if (resultado.IsFailed)
+        {
+            ApresentarMensagemFalha(resultado.ToResult());
+
+            return View("Home", "Index");
+        }
+
+        var sessao = resultado.Value;
+
+        if (sessao is null)
+            MensagemRegistroNaoEncontrado(id);
+
+        var finalizarVm = _mapper.Map<EncerrarSessaoViewModel>(sessao);
+
+        return View(finalizarVm);
+    }
+
+    [HttpPost]
+    //[ValidateAntiForgeryToken]
+    public IActionResult Encerrar(EncerrarSessaoViewModel excluirVm)
+    {
+        var resultado = _sessaoService.Encerrar(excluirVm.Id);
+
+        if (resultado.IsFailed)
+        {
+            ApresentarMensagemFalha(resultado.ToResult());
+
+            return RedirectToAction(nameof(Listar));
+        }
+
+        ApresentarMensagemSucesso($"A Sessão foi encerrada com sucesso!");
+
+        return RedirectToAction(nameof(Listar));
+    }
+
+    private SessaoFormViewModel? CarregarDados(SessaoFormViewModel? Dados = null)
+    {
+        var filmes = _filmeService.SelecionarTodos().Value;
+        var salas = _salaService.SelecionarTodos().Value;
+
+
+        if (Dados is null)
+            Dados = new SessaoFormViewModel();
+
+
+        Dados.Filmes = filmes.Select(c => new SelectListItem(c.Nome, c.Id.ToString()));
+
+        Dados.Salas = salas.Where(s=>s.Disponivel == true).Select(c => new SelectListItem(c.Nome, c.Id.ToString()));
+
+        return Dados;
+    }
+}

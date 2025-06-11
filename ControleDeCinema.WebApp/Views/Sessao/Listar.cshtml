@@ -1,0 +1,55 @@
+﻿@model IEnumerable<ListarSessaoViewModel>
+
+@{
+    ViewBag.Title = "Listar Sessões";
+    Layout = "_Layout";
+}
+
+<div class="card-body">
+    <div class="d-flex w-100">
+        <div class="text-center justify-content-end"></div>
+        <a asp-action="Cadastrar" class="btn btn-primary">Adicionar Nova Sessão</a>
+    </div>
+    <div class="table-responsive mt-3">
+        <table class="table table-striped table-bordered text-white">
+            <thead>
+                <tr>
+                    <th>Filme</th>
+                    <th>Sala</th>
+                    <th>Data de Exibição</th>
+                    <th>Horário da Sessão</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var sessao in Model)
+                {
+                   
+                    <tr class="text-white">}
+                        <td>@sessao.Filme.Nome</td>
+                        <td>@sessao.Sala.Nome</td>
+                        <td>@sessao.DataDeExibicao.ToString("dd/MM/yyyy")</td>
+                        <td>@sessao.HorarioDaSessao.ToString(@"hh\:mm")</td>
+                        <td>
+                            @if (sessao.Finalizada)
+                            {
+                                <span class="badge bg-danger">Encerrada</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-success">Ativa</span>
+                            }
+                        </td>
+                        <td>
+                            <a asp-action="Editar" asp-route-id="@sessao.Id" class="btn btn-primary @(sessao.Finalizada ? "disabled" : "")">Editar</a>
+                            <a asp-action="Vender" asp-route-id="@sessao.Id" class="btn btn-primary @(sessao.Finalizada ? "disabled" : "")">Vender</a>
+                            <a asp-action="Encerrar" asp-route-id="@sessao.Id" class="btn btn-danger @(sessao.Finalizada ? "disabled" : "")">Encerrar</a>
+                            <a asp-action="Detalhes" asp-route-id="@sessao.Id" class="btn btn-warning">Detalhes</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

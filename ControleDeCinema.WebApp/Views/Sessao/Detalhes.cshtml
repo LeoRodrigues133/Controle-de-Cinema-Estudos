@@ -1,0 +1,39 @@
+﻿@model DetalhesSessaoViewModel
+
+@{
+    ViewBag.Title = "Detalhes da Sessão";
+    Layout = "_Layout";
+}
+
+<div class="card bg-dark text-white p-4 mt-3">
+    <dl class="row">
+        <dt class="col-sm-3">Filme</dt>
+        <dd class="col-sm-9">@Model.Filme.Nome</dd>
+
+        <dt class="col-sm-3">Sala</dt>
+        <dd class="col-sm-9">@Model.Sala.Nome</dd>
+
+        <dt class="col-sm-3">Data de Exibição</dt>
+        <dd class="col-sm-9">@Model.DataDeExibicao.ToString("dd/MM/yyyy")</dd>
+
+        <dt class="col-sm-3">Horário da Sessão</dt>
+        <dd class="col-sm-9">@Model.HorarioDaSessao.ToString(@"hh\:mm")</dd>
+
+        <dt class="col-sm-3">Status</dt>
+        <dd class="col-sm-9">
+            @if (Model.Finalizada)
+            {
+                <span class="badge bg-danger">Encerrada</span>
+            }
+            else
+            {
+                <span class="badge bg-success">Ativa</span>
+            }
+        </dd>
+    </dl>
+
+    <div class="mt-3">
+        <a asp-action="Listar" class="btn btn-secondary">Voltar</a>
+        <a asp-action="Editar" asp-route-id="@Model.Id" class="btn btn-primary">Editar</a>
+    </div>
+</div>

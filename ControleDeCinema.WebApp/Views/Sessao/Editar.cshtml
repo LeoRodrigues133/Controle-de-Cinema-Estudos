@@ -1,0 +1,44 @@
+﻿@model SessaoFormViewModel
+
+@{
+    ViewBag.Title = "Editar Sessão";
+    Layout = "_Layout";
+}
+
+
+<div class="card bg-dark text-white p-4 mt-3">
+    <form asp-action="Editar" method="post">
+        <input type="hidden" asp-for="Id" />
+
+        <div class="mb-3">
+            <label asp-for="FilmeId" class="form-label">Filme</label>
+            <select asp-for="FilmeId" class="form-select" asp-items="Model.Filmes">
+                <option value="">-- Selecione um filme --</option>
+            </select>
+            <span asp-validation-for="FilmeId" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="SalaId" class="form-label">Sala</label>
+            <select asp-for="SalaId" class="form-select" asp-items="Model.Salas">
+                <option value="">-- Selecione uma sala --</option>
+            </select>
+            <span asp-validation-for="SalaId" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="DataDeExibicao" class="form-label">Data de Exibição</label>
+            <input asp-for="DataDeExibicao" type="date" class="form-control" />
+            <span asp-validation-for="DataDeExibicao" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="HorarioDaSessao" class="form-label">Horário da Sessão</label>
+            <input asp-for="HorarioDaSessao" type="time" class="form-control" />
+            <span asp-validation-for="HorarioDaSessao" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Salvar</button>
+        <a asp-action="Listar" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>

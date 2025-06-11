@@ -1,0 +1,41 @@
+﻿
+
+<!-- Offcanvas lateral -->
+
+<div class="offcanvas offcanvas-end text-black" tabindex="-1" id="carrinhoOffcanvas" aria-labelledby="carrinhoLabel" data-bs-backdrop="false">
+
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="carrinhoLabel">Carrinho de Compras</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Fechar"></button>
+    </div>
+
+    <div class="offcanvas-body" id="carrinhoBody">
+        <p><strong>Ingressos para distribuir: <span id="restantes">0</span></strong></p>
+
+        <div class="mb-3">
+            <label class="form-label">Meias-entradas</label>
+            <div class="input-group">
+                <button type="button" class="btn btn-outline-secondary" id="menosMeia">−</button>
+                <input type="number" class="form-control text-center" id="meiasInput" min="0" value="0">
+                <button type="button" class="btn btn-outline-secondary" id="maisMeia">+</button>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Inteiras</label>
+            <div class="input-group">
+                <button type="button" class="btn btn-outline-secondary" id="menosInteira">−</button>
+                <input type="number" class="form-control text-center" id="inteirasInput" min="0" value="0">
+                <button type="button" class="btn btn-outline-secondary" id="maisInteira">+</button>
+            </div>
+        </div>
+
+        <div class="alert alert-warning d-none" id="erroDistribuicao">A soma de meias e inteiras excede o total de assentos selecionados!</div>
+
+        <hr />
+        <p><strong>Total: R$ <span id="valorTotal">0.00</span></strong></p>
+        <button type="submit" class="btn btn-success w-100 mt-2" id="btnFinalizar">Finalizar Compra</button>
+    </div>
+
+    <div id="dadosCarrinho"></div>
+</div>
