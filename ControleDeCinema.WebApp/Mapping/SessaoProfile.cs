@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ControleDeCinema.Domínio;
+using ControleDeCinema.WebApp.Mapping.Resolvers;
 using ControleDeCinema.WebApp.Models;
 
 namespace ControleDeCinema.WebApp.Mapping;
@@ -26,10 +27,11 @@ public class SessaoProfile : Profile
             .ForMember(x => x.HorarioDaSessao, dest => dest.MapFrom(src => src.HorarioDaSessao));
 
         CreateMap<Sessão, SessaoFormViewModel>();
-        CreateMap<SessaoFormViewModel, Sessão>();
-
+        CreateMap<SessaoFormViewModel, Sessão>()
+            .ForMember(x => x.EmpresaId, dest => dest.MapFrom<UsuarioResolver>());
 
         CreateMap<Assento, AssentoViewModel>();
+
         CreateMap<Sessão, VenderSessaoViewModel>();
 
     }

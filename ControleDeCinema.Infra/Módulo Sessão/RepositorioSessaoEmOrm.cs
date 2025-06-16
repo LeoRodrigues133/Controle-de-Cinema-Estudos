@@ -32,7 +32,13 @@ public class RepositorioSessaoEmOrm : RepositorioBaseEmOrm<Sessão>, IRepositori
 
     public List<Sessão> Filtrar(Func<Sessão, bool> predicate)
     {
-        throw new NotImplementedException();
+        return ObterRegistro()
+            .Include(x => x.Filme)
+            .ThenInclude(y => y.Categoria)
+            .Include(x => x.Sala)
+            .Include(x => x.Assentos)
+            .Where(predicate)
+            .ToList();
     }
 
     protected override DbSet<Sessão> ObterRegistro()

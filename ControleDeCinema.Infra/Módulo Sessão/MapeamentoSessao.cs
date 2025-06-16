@@ -42,11 +42,14 @@ public class MapeamentoSessao : IEntityTypeConfiguration<Sessão>
             .HasColumnType("time")
             .IsRequired();
 
-        builder.HasOne(x => x.Usuario)
-            .WithMany()
-            .HasForeignKey("Usuario_Id")
-            .IsRequired()
-            .OnDelete(DeleteBehavior.NoAction);
+        builder.Property(s => s.EmpresaId)
+            .HasColumnType("int")
+            .HasColumnName("Empresa_Id")
+            .IsRequired();
 
+        builder.HasOne(g => g.Empresa)
+            .WithMany()
+            .HasForeignKey(s => s.EmpresaId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

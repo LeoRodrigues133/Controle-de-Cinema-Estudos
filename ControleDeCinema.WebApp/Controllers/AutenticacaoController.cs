@@ -1,5 +1,6 @@
-﻿using ControleDeCinema.Aplicação.AutenticaçãoService;
+﻿using ControleDeCinema.Aplicação.Services.AutenticaçãoService;
 using ControleDeCinema.Domínio;
+using ControleDeCinema.Domínio.Módulo_Autenticação;
 using ControleDeCinema.WebApp.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -33,7 +34,7 @@ public class AutenticacaoController : Controller
 
         var senha = RegistroVm.Senha!;
 
-        var resultado = await _autenticacaoService.Registrar(usuario, senha, RegistroVm.Tipo);
+        var resultado = await _autenticacaoService.Registrar(usuario, senha, TipoUsuarioEnum.Empresa);
 
         if (resultado.IsSuccess)
             return RedirectToAction("Index", "Home");

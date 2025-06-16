@@ -26,7 +26,9 @@ public class RepositorioDeSalaOrm : RepositorioBaseEmOrm<Sala>, IRepositorioSala
     }
     public List<Sala> Filtrar(Func<Sala, bool> predicate)
     {
-        throw new NotImplementedException();
+        return ObterRegistro()
+            .Where(predicate)
+            .ToList();
     }
 
 }

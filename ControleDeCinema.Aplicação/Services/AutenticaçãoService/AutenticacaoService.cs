@@ -1,10 +1,11 @@
 ﻿using ControleDeCinema.Domínio;
+using ControleDeCinema.Domínio.Módulo_Autenticação;
 using FluentResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using System.Security.Claims;
 
-namespace ControleDeCinema.Aplicação.AutenticaçãoService;
+namespace ControleDeCinema.Aplicação.Services.AutenticaçãoService;
 public class AutenticacaoService
 {
     readonly UserManager<Usuario> _userManager;
@@ -22,7 +23,7 @@ public class AutenticacaoService
         _roleManager = roleManager;
     }
 
-    public async Task<Result<Usuario>> Registrar(Usuario usuario, string senha, string tipoUsuario)
+    public async Task<Result<Usuario>> Registrar(Usuario usuario, string senha, TipoUsuarioEnum tipoEnum)
     {
         var resultadoUsuario = await _userManager.CreateAsync(usuario, senha);
 
@@ -31,6 +32,8 @@ public class AutenticacaoService
             var erros = resultadoUsuario.Errors.Select(s => s.Description);
             return Result.Fail(erros);
         }
+
+        var tipoUsuario = tipoEnum.ToString();
 
         var resultadoTipoUsuario = await _roleManager.FindByNameAsync(tipoUsuario);
 
@@ -47,7 +50,7 @@ public class AutenticacaoService
 
         await _userManager.AddToRoleAsync(usuario, tipoUsuario);
 
-        if (tipoUsuario == "Empresa")
+        if (tipoEnum == TipoUsuarioEnum.Empresa)
 
             await _signInManager.SignInAsync(usuario, isPersistent: false);
 

@@ -27,7 +27,9 @@ public class RepositorioCategoriaEmOrm : RepositorioBaseEmOrm<Categoria>, IRepos
 
     public List<Categoria> Filtrar(Func<Categoria, bool> predicate)
     {
-        throw new NotImplementedException();
+        return ObterRegistro()
+            .Where(predicate)
+            .ToList();
     }
 
 }

@@ -1,5 +1,5 @@
 ﻿namespace ControleDeCinema.Domínio;
-public class EntidadeBase
+public abstract class EntidadeBase
 {
     public int Id { get; set; }
     public int EmpresaId { get; set; }

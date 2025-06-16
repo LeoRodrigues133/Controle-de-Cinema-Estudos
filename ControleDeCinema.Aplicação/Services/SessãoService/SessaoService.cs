@@ -18,9 +18,9 @@ public class SessaoService
         _repositorioFilme = repositorioFilme;
         _repositorioSala = repositorioSala;
     }
-    public Result<List<Sessão>> SelecionarTodos()
+    public Result<List<Sessão>> SelecionarTodos(int empresaId)
     {
-        var sessaos = _repositorioSessao.SelecionarTodos();
+        var sessaos = _repositorioSessao.Filtrar(x=>x.EmpresaId == empresaId);
 
         if (sessaos is null)
             return Result.Fail("Nenhuma sessão encontrada.");

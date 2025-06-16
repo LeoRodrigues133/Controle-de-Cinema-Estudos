@@ -7,7 +7,7 @@ using ControleDeCinema.WebApp.Controllers.Compartilhado;
 using ControleDeCinema.Aplicação.Services.FilmeService;
 using ControleDeCinema.Aplicação.Services.SalaService;
 using ControleDeCinema.Aplicação.Services.SessãoService;
-using ControleDeCinema.Aplicação.AutenticaçãoService;
+using ControleDeCinema.Aplicação.Services.AutenticaçãoService;
 
 namespace ControleDeCinema.WebApp.Controllers;
 public class SessaoController : WebController
@@ -32,7 +32,7 @@ public class SessaoController : WebController
 
     public IActionResult Listar()
     {
-        var resultado = _sessaoService.SelecionarTodos();
+        var resultado = _sessaoService.SelecionarTodos(EmpresaId.GetValueOrDefault());
 
         if (resultado.IsFailed)
         {
@@ -74,7 +74,7 @@ public class SessaoController : WebController
     [HttpPost]
     //[ValidateAntiForgeryToken]
     public IActionResult Cadastrar(SessaoFormViewModel cadastrasVM)
-    {
+     {
         if (!ModelState.IsValid)
             return View(CarregarDados(cadastrasVM));
 
@@ -246,8 +246,8 @@ public class SessaoController : WebController
 
     private SessaoFormViewModel? CarregarDados(SessaoFormViewModel? Dados = null)
     {
-        var filmes = _filmeService.SelecionarTodos().Value;
-        var salas = _salaService.SelecionarTodos().Value;
+        var filmes = _filmeService.SelecionarTodos(EmpresaId.GetValueOrDefault()).Value;
+        var salas = _salaService.SelecionarTodos(EmpresaId.GetValueOrDefault()).Value;
 
 
         if (Dados is null)

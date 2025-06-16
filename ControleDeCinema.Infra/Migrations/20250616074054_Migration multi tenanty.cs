@@ -32,7 +32,6 @@ namespace ControleDeCinema.Infra.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    EmpresaId = table.Column<int>(type: "int", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -51,11 +50,6 @@ namespace ControleDeCinema.Infra.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AspNetUsers_AspNetUsers_EmpresaId",
-                        column: x => x.EmpresaId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -171,17 +165,17 @@ namespace ControleDeCinema.Infra.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(type: "varchar(100)", nullable: false),
-                    UsuarioId = table.Column<int>(type: "int", nullable: false),
-                    Usuario_Id = table.Column<int>(type: "int", nullable: false)
+                    Empresa_Id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TB_CATEGORIA", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TB_CATEGORIA_AspNetUsers_Usuario_Id",
-                        column: x => x.Usuario_Id,
+                        name: "FK_TB_CATEGORIA_AspNetUsers_Empresa_Id",
+                        column: x => x.Empresa_Id,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -193,14 +187,14 @@ namespace ControleDeCinema.Infra.Migrations
                     Capacidade = table.Column<int>(type: "int", nullable: false),
                     Nome = table.Column<string>(type: "varchar(50)", nullable: false),
                     Disponivel = table.Column<bool>(type: "bit", nullable: false),
-                    Usuario_Id = table.Column<int>(type: "int", nullable: false)
+                    Empresa_Id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TB_SALAS", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TB_SALAS_AspNetUsers_Usuario_Id",
-                        column: x => x.Usuario_Id,
+                        name: "FK_TB_SALAS_AspNetUsers_Empresa_Id",
+                        column: x => x.Empresa_Id,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -215,17 +209,17 @@ namespace ControleDeCinema.Infra.Migrations
                     Nome = table.Column<string>(type: "varchar(150)", nullable: false),
                     Duracao = table.Column<int>(type: "int", nullable: false),
                     CategoriaId = table.Column<int>(type: "int", nullable: false),
-                    UsuarioId = table.Column<int>(type: "int", nullable: false),
-                    Usuario_Id = table.Column<int>(type: "int", nullable: false)
+                    Empresa_Id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TB_FILME", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TB_FILME_AspNetUsers_Usuario_Id",
-                        column: x => x.Usuario_Id,
+                        name: "FK_TB_FILME_AspNetUsers_Empresa_Id",
+                        column: x => x.Empresa_Id,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_TB_FILME_TB_CATEGORIA_CategoriaId",
                         column: x => x.CategoriaId,
@@ -245,17 +239,17 @@ namespace ControleDeCinema.Infra.Migrations
                     SalaId = table.Column<int>(type: "int", nullable: false),
                     DataDeExibicao = table.Column<DateTime>(type: "datetime2", nullable: false),
                     HorarioDaSessao = table.Column<TimeSpan>(type: "time", nullable: false),
-                    UsuarioId = table.Column<int>(type: "int", nullable: false),
-                    Usuario_Id = table.Column<int>(type: "int", nullable: false)
+                    Empresa_Id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TB_SESSAO", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TB_SESSAO_AspNetUsers_Usuario_Id",
-                        column: x => x.Usuario_Id,
+                        name: "FK_TB_SESSAO_AspNetUsers_Empresa_Id",
+                        column: x => x.Empresa_Id,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_TB_SESSAO_TB_FILME_FilmeId",
                         column: x => x.FilmeId,
@@ -279,17 +273,17 @@ namespace ControleDeCinema.Infra.Migrations
                     Numero = table.Column<string>(type: "varchar(10)", nullable: false),
                     Disponivel = table.Column<bool>(type: "bit", nullable: false),
                     SessaoId = table.Column<int>(type: "int", nullable: false),
-                    UsuarioId = table.Column<int>(type: "int", nullable: false),
-                    Usuario_Id = table.Column<int>(type: "int", nullable: false)
+                    Empresa_Id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TB_ASSENTOS", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TB_ASSENTOS_AspNetUsers_Usuario_Id",
-                        column: x => x.Usuario_Id,
+                        name: "FK_TB_ASSENTOS_AspNetUsers_Empresa_Id",
+                        column: x => x.Empresa_Id,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_TB_ASSENTOS_TB_SESSAO_SessaoId",
                         column: x => x.SessaoId,
@@ -331,11 +325,6 @@ namespace ControleDeCinema.Infra.Migrations
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_EmpresaId",
-                table: "AspNetUsers",
-                column: "EmpresaId");
-
-            migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
@@ -343,19 +332,19 @@ namespace ControleDeCinema.Infra.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_TB_ASSENTOS_Empresa_Id",
+                table: "TB_ASSENTOS",
+                column: "Empresa_Id");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TB_ASSENTOS_SessaoId",
                 table: "TB_ASSENTOS",
                 column: "SessaoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TB_ASSENTOS_Usuario_Id",
-                table: "TB_ASSENTOS",
-                column: "Usuario_Id");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TB_CATEGORIA_Usuario_Id",
+                name: "IX_TB_CATEGORIA_Empresa_Id",
                 table: "TB_CATEGORIA",
-                column: "Usuario_Id");
+                column: "Empresa_Id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TB_FILME_CategoriaId",
@@ -363,14 +352,19 @@ namespace ControleDeCinema.Infra.Migrations
                 column: "CategoriaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TB_FILME_Usuario_Id",
+                name: "IX_TB_FILME_Empresa_Id",
                 table: "TB_FILME",
-                column: "Usuario_Id");
+                column: "Empresa_Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TB_SALAS_Usuario_Id",
+                name: "IX_TB_SALAS_Empresa_Id",
                 table: "TB_SALAS",
-                column: "Usuario_Id");
+                column: "Empresa_Id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TB_SESSAO_Empresa_Id",
+                table: "TB_SESSAO",
+                column: "Empresa_Id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TB_SESSAO_FilmeId",
@@ -381,11 +375,6 @@ namespace ControleDeCinema.Infra.Migrations
                 name: "IX_TB_SESSAO_SalaId",
                 table: "TB_SESSAO",
                 column: "SalaId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TB_SESSAO_Usuario_Id",
-                table: "TB_SESSAO",
-                column: "Usuario_Id");
         }
 
         /// <inheritdoc />

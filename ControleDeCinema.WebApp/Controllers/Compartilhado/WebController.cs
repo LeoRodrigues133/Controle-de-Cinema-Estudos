@@ -2,7 +2,7 @@
 using ControleDeCinema.WebApp.Extensions;
 using ControleDeCinema.WebApp.Models;
 using Microsoft.AspNetCore.Mvc;
-using ControleDeCinema.Aplicação.AutenticaçãoService;
+using ControleDeCinema.Aplicação.Services.AutenticaçãoService;
 
 namespace ControleDeCinema.WebApp.Controllers.Compartilhado;
 
@@ -10,20 +10,21 @@ public class WebController : Controller
 {
     protected readonly AutenticacaoService _authService;
 
+    protected int? EmpresaId
+    {
+        get
+        {
+            var EmpresaId = _authService.ObterIdEmpresaAsync(User).Result;
+
+            return EmpresaId;
+        }
+    }
+
     protected WebController(AutenticacaoService authService)
     {
         _authService = authService;
     }
 
-    protected int? UsuarioId
-    {
-        get
-        {
-            var usuarioId = _authService.ObterIdUsuarioAsync(User).Result;
-
-            return usuarioId;
-        }
-    }
     protected IActionResult MensagemRegistroNaoEncontrado(int idRegistro)
     {
         TempData.SerializarMensagemViewModel(new MensagemViewModel

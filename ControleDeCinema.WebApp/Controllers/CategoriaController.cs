@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using ControleDeCinema.Aplicação.AutenticaçãoService;
-using ControleDeCinema.Aplicação.Services.CategoriaService;
-using ControleDeCinema.Domínio;
-using ControleDeCinema.WebApp.Controllers.Compartilhado;
-using ControleDeCinema.WebApp.Models;
 using Microsoft.AspNetCore.Mvc;
+using ControleDeCinema.Domínio;
+using ControleDeCinema.WebApp.Models;
+using ControleDeCinema.WebApp.Controllers.Compartilhado;
+using ControleDeCinema.Aplicação.Services.CategoriaService;
+using ControleDeCinema.Aplicação.Services.AutenticaçãoService;
 
 namespace ControleDeCinema.WebApp.Controllers;
 public class CategoriaController : WebController
@@ -20,7 +20,7 @@ public class CategoriaController : WebController
 
     public IActionResult Listar()
     {
-        var resultado = _categoriaService.SelecionarTodos();
+        var resultado = _categoriaService.SelecionarTodos(EmpresaId.GetValueOrDefault());
 
         if (resultado.IsFailed)
         {

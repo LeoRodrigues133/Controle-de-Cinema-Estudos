@@ -13,7 +13,7 @@ using ControleDeCinema.Aplicação.Services.CategoriaService;
 using ControleDeCinema.Aplicação.Services.FilmeService;
 using ControleDeCinema.Aplicação.Services.SalaService;
 using ControleDeCinema.Aplicação.Services.SessãoService;
-using ControleDeCinema.Aplicação.AutenticaçãoService;
+using ControleDeCinema.Aplicação.Services.AutenticaçãoService;
 
 namespace ControleDeCinema.WebApp;
 

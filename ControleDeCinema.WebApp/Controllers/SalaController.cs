@@ -2,10 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using ControleDeCinema.Domínio;
 using ControleDeCinema.WebApp.Models;
+using Microsoft.AspNetCore.Authorization;
 using ControleDeCinema.Aplicação.Services.SalaService;
 using ControleDeCinema.WebApp.Controllers.Compartilhado;
-using Microsoft.AspNetCore.Authorization;
-using ControleDeCinema.Aplicação.AutenticaçãoService;
+using ControleDeCinema.Aplicação.Services.AutenticaçãoService;
 
 namespace ControleDeCinema.WebApp.Controllers;
 
@@ -23,7 +23,7 @@ public class SalaController : WebController
 
     public IActionResult Listar()
     {
-        var resultado = _salaService.SelecionarTodos();
+        var resultado = _salaService.SelecionarTodos(EmpresaId.GetValueOrDefault());
 
         if (resultado.IsFailed)
         {

@@ -33,6 +33,10 @@ namespace ControleDeCinema.Infra.Migrations
                     b.Property<bool>("Disponivel")
                         .HasColumnType("bit");
 
+                    b.Property<int>("EmpresaId")
+                        .HasColumnType("int")
+                        .HasColumnName("Empresa_Id");
+
                     b.Property<string>("Numero")
                         .IsRequired()
                         .HasColumnType("varchar(10)");
@@ -40,17 +44,11 @@ namespace ControleDeCinema.Infra.Migrations
                     b.Property<int>("SessaoId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UsuarioId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Usuario_Id")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("SessaoId");
+                    b.HasIndex("EmpresaId");
 
-                    b.HasIndex("Usuario_Id");
+                    b.HasIndex("SessaoId");
 
                     b.ToTable("TB_ASSENTOS", (string)null);
                 });
@@ -63,19 +61,17 @@ namespace ControleDeCinema.Infra.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("EmpresaId")
+                        .HasColumnType("int")
+                        .HasColumnName("Empresa_Id");
+
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("varchar(100)");
 
-                    b.Property<int>("UsuarioId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Usuario_Id")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("Usuario_Id");
+                    b.HasIndex("EmpresaId");
 
                     b.ToTable("TB_CATEGORIA", (string)null);
                 });
@@ -94,21 +90,19 @@ namespace ControleDeCinema.Infra.Migrations
                     b.Property<int>("Duracao")
                         .HasColumnType("int");
 
+                    b.Property<int>("EmpresaId")
+                        .HasColumnType("int")
+                        .HasColumnName("Empresa_Id");
+
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("varchar(150)");
-
-                    b.Property<int>("UsuarioId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Usuario_Id")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CategoriaId");
 
-                    b.HasIndex("Usuario_Id");
+                    b.HasIndex("EmpresaId");
 
                     b.ToTable("TB_FILME", (string)null);
                 });
@@ -157,17 +151,17 @@ namespace ControleDeCinema.Infra.Migrations
                     b.Property<bool>("Disponivel")
                         .HasColumnType("bit");
 
+                    b.Property<int>("EmpresaId")
+                        .HasColumnType("int")
+                        .HasColumnName("Empresa_Id");
+
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("varchar(50)");
 
-                    b.Property<int>("UsuarioId")
-                        .HasColumnType("int")
-                        .HasColumnName("Usuario_Id");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UsuarioId");
+                    b.HasIndex("EmpresaId");
 
                     b.ToTable("TB_SALAS", (string)null);
                 });
@@ -183,6 +177,10 @@ namespace ControleDeCinema.Infra.Migrations
                     b.Property<DateTime>("DataDeExibicao")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("EmpresaId")
+                        .HasColumnType("int")
+                        .HasColumnName("Empresa_Id");
+
                     b.Property<int>("FilmeId")
                         .HasColumnType("int");
 
@@ -195,19 +193,13 @@ namespace ControleDeCinema.Infra.Migrations
                     b.Property<int>("SalaId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UsuarioId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Usuario_Id")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("EmpresaId");
 
                     b.HasIndex("FilmeId");
 
                     b.HasIndex("SalaId");
-
-                    b.HasIndex("Usuario_Id");
 
                     b.ToTable("TB_SESSAO", (string)null);
                 });
@@ -233,9 +225,6 @@ namespace ControleDeCinema.Infra.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
-
-                    b.Property<int?>("EmpresaId")
-                        .HasColumnType("int");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -271,8 +260,6 @@ namespace ControleDeCinema.Infra.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("EmpresaId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -390,32 +377,32 @@ namespace ControleDeCinema.Infra.Migrations
 
             modelBuilder.Entity("ControleDeCinema.Domínio.Assento", b =>
                 {
+                    b.HasOne("ControleDeCinema.Domínio.Usuario", "Empresa")
+                        .WithMany()
+                        .HasForeignKey("EmpresaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("ControleDeCinema.Domínio.Sessão", "Sessao")
                         .WithMany("Assentos")
                         .HasForeignKey("SessaoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ControleDeCinema.Domínio.Usuario", "Usuario")
-                        .WithMany()
-                        .HasForeignKey("Usuario_Id")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                    b.Navigation("Empresa");
 
                     b.Navigation("Sessao");
-
-                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("ControleDeCinema.Domínio.Categoria", b =>
                 {
-                    b.HasOne("ControleDeCinema.Domínio.Usuario", "Usuario")
+                    b.HasOne("ControleDeCinema.Domínio.Usuario", "Empresa")
                         .WithMany()
-                        .HasForeignKey("Usuario_Id")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .HasForeignKey("EmpresaId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Usuario");
+                    b.Navigation("Empresa");
                 });
 
             modelBuilder.Entity("ControleDeCinema.Domínio.Filme", b =>
@@ -426,30 +413,36 @@ namespace ControleDeCinema.Infra.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ControleDeCinema.Domínio.Usuario", "Usuario")
+                    b.HasOne("ControleDeCinema.Domínio.Usuario", "Empresa")
                         .WithMany()
-                        .HasForeignKey("Usuario_Id")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .HasForeignKey("EmpresaId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Categoria");
 
-                    b.Navigation("Usuario");
+                    b.Navigation("Empresa");
                 });
 
             modelBuilder.Entity("ControleDeCinema.Domínio.Sala", b =>
                 {
-                    b.HasOne("ControleDeCinema.Domínio.Usuario", "Usuario")
+                    b.HasOne("ControleDeCinema.Domínio.Usuario", "Empresa")
                         .WithMany()
-                        .HasForeignKey("UsuarioId")
+                        .HasForeignKey("EmpresaId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Usuario");
+                    b.Navigation("Empresa");
                 });
 
             modelBuilder.Entity("ControleDeCinema.Domínio.Sessão", b =>
                 {
+                    b.HasOne("ControleDeCinema.Domínio.Usuario", "Empresa")
+                        .WithMany()
+                        .HasForeignKey("EmpresaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("ControleDeCinema.Domínio.Filme", "Filme")
                         .WithMany()
                         .HasForeignKey("FilmeId")
@@ -462,26 +455,11 @@ namespace ControleDeCinema.Infra.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ControleDeCinema.Domínio.Usuario", "Usuario")
-                        .WithMany()
-                        .HasForeignKey("Usuario_Id")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                    b.Navigation("Empresa");
 
                     b.Navigation("Filme");
 
                     b.Navigation("Sala");
-
-                    b.Navigation("Usuario");
-                });
-
-            modelBuilder.Entity("ControleDeCinema.Domínio.Usuario", b =>
-                {
-                    b.HasOne("ControleDeCinema.Domínio.Usuario", "Empresa")
-                        .WithMany()
-                        .HasForeignKey("EmpresaId");
-
-                    b.Navigation("Empresa");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>

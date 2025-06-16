@@ -57,9 +57,9 @@ public class CategoriaService
         return Result.Ok(categoria);
     }
 
-    public Result<List<Categoria>> SelecionarTodos()
+    public Result<List<Categoria>> SelecionarTodos(int empresaId)
     {
-        var categorias = _repositorioCategoria.SelecionarTodos();
+        var categorias = _repositorioCategoria.Filtrar(x => x.EmpresaId == empresaId);
 
         if (categorias == null)
             return Result.Fail("Nenhuma categoria encontrada.");

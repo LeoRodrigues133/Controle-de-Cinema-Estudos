@@ -13,9 +13,9 @@ public class FilmeService
         _repositorioCategoria = repositorioCategoria;
     }
 
-    public Result<List<Filme>> SelecionarTodos()
+    public Result<List<Filme>> SelecionarTodos(int empresaId)
     {
-        var filmes = _repositorioFilme.SelecionarTodos();
+        var filmes = _repositorioFilme.Filtrar(x => x.EmpresaId == empresaId);
 
         return Result.Ok(filmes);
     }

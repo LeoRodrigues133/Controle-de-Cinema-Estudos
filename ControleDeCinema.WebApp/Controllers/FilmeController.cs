@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using ControleDeCinema.Aplicação.Services.FilmeService;
 using ControleDeCinema.WebApp.Controllers.Compartilhado;
 using ControleDeCinema.Aplicação.Services.CategoriaService;
-using ControleDeCinema.Aplicação.AutenticaçãoService;
+using ControleDeCinema.Aplicação.Services.AutenticaçãoService;
 
 namespace ControleDeCinema.WebApp.Controllers;
 public class FilmeController : WebController
@@ -24,7 +24,7 @@ public class FilmeController : WebController
 
     public IActionResult Listar()
     {
-        var resultado = _filmeService.SelecionarTodos();
+        var resultado = _filmeService.SelecionarTodos(EmpresaId.GetValueOrDefault());
 
         if (resultado.IsFailed)
         {
@@ -173,7 +173,7 @@ public class FilmeController : WebController
 
     private FilmeFormViewModel? CarregarDados(FilmeFormViewModel? Dados = null)
     {
-        var categorias = _categoriaService.SelecionarTodos().Value;
+        var categorias = _categoriaService.SelecionarTodos(EmpresaId.GetValueOrDefault()).Value;
 
         if (Dados is null)
             Dados = new FilmeFormViewModel();

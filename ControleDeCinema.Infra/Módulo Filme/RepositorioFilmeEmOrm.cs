@@ -1,6 +1,6 @@
 ﻿using ControleDeCinema.Domínio;
-using ControleDeCinema.Infra.Compartilhado;
 using Microsoft.EntityFrameworkCore;
+using ControleDeCinema.Infra.Compartilhado;
 
 namespace ControleDeCinema.Infra.Módulo_Filme;
 public class RepositorioFilmeEmOrm : RepositorioBaseEmOrm<Filme>, IRepositorioFilme
@@ -26,7 +26,10 @@ public class RepositorioFilmeEmOrm : RepositorioBaseEmOrm<Filme>, IRepositorioFi
 
     public List<Filme> Filtrar(Func<Filme, bool> predicate)
     {
-        throw new NotImplementedException();
+        return ObterRegistro()
+            .Include(x => x.Categoria)
+            .Where(predicate)
+            .ToList();
     }
 
     protected override DbSet<Filme> ObterRegistro()

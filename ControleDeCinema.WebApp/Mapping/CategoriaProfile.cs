@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ControleDeCinema.Domínio;
+using ControleDeCinema.WebApp.Mapping.Resolvers;
 using ControleDeCinema.WebApp.Models;
 
 namespace ControleDeCinema.WebApp.Mapping;
@@ -14,6 +15,8 @@ public class CategoriaProfile : Profile
         CreateMap<Categoria, DetalhesCategoriaViewModel>();
 
         CreateMap<EditarCategoriaViewModel, Categoria>();
-        CreateMap<CadastrarCategoriaViewModel, Categoria>();
+        CreateMap<CadastrarCategoriaViewModel, Categoria>()
+            .ForMember(x => x.EmpresaId, dest => dest.MapFrom<UsuarioResolver>());
+
     }
 }

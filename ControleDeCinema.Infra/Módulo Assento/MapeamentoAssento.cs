@@ -30,10 +30,14 @@ public class MapeamentoAssento : IEntityTypeConfiguration<Assento>
             .WithMany(x => x.Assentos)
             .HasForeignKey(x => x.SessaoId);
 
-        builder.HasOne(x => x.Usuario)
+        builder.Property(s => s.EmpresaId)
+            .HasColumnType("int")
+            .HasColumnName("Empresa_Id")
+            .IsRequired();
+
+        builder.HasOne(g => g.Empresa)
             .WithMany()
-            .HasForeignKey("Usuario_Id")
-            .IsRequired()
-            .OnDelete(DeleteBehavior.NoAction);
+            .HasForeignKey(s => s.EmpresaId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

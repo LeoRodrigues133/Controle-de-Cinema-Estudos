@@ -58,6 +58,7 @@ public class Sessão : EntidadeBase
             Assento novoAssento = new Assento
             {
                 Numero = GerarNumeroAssento(i),
+                EmpresaId = this.EmpresaId,
                 Sessao = this
             };
             this.Assentos.Add(novoAssento);

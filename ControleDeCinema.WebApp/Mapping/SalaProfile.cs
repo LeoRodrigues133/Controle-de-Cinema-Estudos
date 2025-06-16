@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ControleDeCinema.Domínio;
+using ControleDeCinema.WebApp.Mapping.Resolvers;
 using ControleDeCinema.WebApp.Models;
 
 namespace ControleDeCinema.WebApp.Mapping;
@@ -14,7 +15,8 @@ public class SalaProfile : Profile
         CreateMap<Sala, DetalhesSalaViewModel>();
 
         CreateMap<EditarSalaViewModel, Sala>();
-        CreateMap<CadastrarSalaViewModel, Sala>();
+        CreateMap<CadastrarSalaViewModel, Sala>()
+            .ForMember(x => x.EmpresaId, dest => dest.MapFrom<UsuarioResolver>());
 
     }
 }

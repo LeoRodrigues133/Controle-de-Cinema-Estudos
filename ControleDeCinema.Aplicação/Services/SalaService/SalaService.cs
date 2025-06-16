@@ -12,22 +12,6 @@ public class SalaService
         _repositorioSala = repositorioSala;
     }
 
-    public Result<List<Sala>> SelecionarTodos()
-    {
-        var salas = _repositorioSala.SelecionarTodos();
-
-        return Result.Ok(salas);
-    }
-    public Result<Sala> SelecionarPorId(int id)
-    {
-        var sala = _repositorioSala.SelecionarPorId(id);
-
-        if (sala == null)
-            return Result.Fail("Sala não encontrada.");
-
-        return Result.Ok(sala);
-    }
-
     public Result<Sala> Cadastrar(Sala sala)
     {
         #region Erros
@@ -64,6 +48,22 @@ public class SalaService
             return Result.Fail("Registro não encontrado.");
 
         _repositorioSala.Excluir(sala);
+
+        return Result.Ok(sala);
+    }
+
+    public Result<List<Sala>> SelecionarTodos(int empresaId)
+    {
+        var salas = _repositorioSala.Filtrar(x => x.EmpresaId == empresaId);
+
+        return Result.Ok(salas);
+    }
+    public Result<Sala> SelecionarPorId(int id)
+    {
+        var sala = _repositorioSala.SelecionarPorId(id);
+
+        if (sala == null)
+            return Result.Fail("Sala não encontrada.");
 
         return Result.Ok(sala);
     }

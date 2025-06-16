@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using ControleDeCinema.Aplicação.AutenticaçãoService;
+using ControleDeCinema.Aplicação.Services.AutenticaçãoService;
 using System.Security.Authentication;
 
 namespace ControleDeCinema.WebApp.Mapping.Resolvers;
