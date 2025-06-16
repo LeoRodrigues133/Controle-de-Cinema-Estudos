@@ -29,5 +29,11 @@ public class MapeamentoAssento : IEntityTypeConfiguration<Assento>
         builder.HasOne(x => x.Sessao)
             .WithMany(x => x.Assentos)
             .HasForeignKey(x => x.SessaoId);
+
+        builder.HasOne(x => x.Usuario)
+            .WithMany()
+            .HasForeignKey("Usuario_Id")
+            .IsRequired()
+            .OnDelete(DeleteBehavior.NoAction);
     }
 }

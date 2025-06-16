@@ -1,7 +1,7 @@
 ﻿using ControleDeCinema.Domínio;
 using FluentResults;
 
-namespace ControleDeCinema.Aplicação;
+namespace ControleDeCinema.Aplicação.Services.CategoriaService;
 public class CategoriaService
 {
     readonly IRepositorioCategoria _repositorioCategoria;

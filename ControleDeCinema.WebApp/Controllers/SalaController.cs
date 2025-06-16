@@ -1,17 +1,21 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ControleDeCinema.Domínio;
-using ControleDeCinema.Aplicação;
 using ControleDeCinema.WebApp.Models;
+using ControleDeCinema.Aplicação.Services.SalaService;
 using ControleDeCinema.WebApp.Controllers.Compartilhado;
+using Microsoft.AspNetCore.Authorization;
+using ControleDeCinema.Aplicação.AutenticaçãoService;
 
 namespace ControleDeCinema.WebApp.Controllers;
+
+[Authorize(Roles = "Empresa")]
 public class SalaController : WebController
 {
     readonly SalaService _salaService;
     readonly IMapper _mapeador;
 
-    public SalaController(SalaService salaService, IMapper mapeador)
+    public SalaController(SalaService salaService, IMapper mapeador, AutenticacaoService authService) : base(authService)
     {
         _salaService = salaService;
         _mapeador = mapeador;
@@ -109,7 +113,7 @@ public class SalaController : WebController
     //[ValidateAntiForgeryToken]
     public IActionResult Editar(EditarSalaViewModel editarVm)
     {
-        if(!ModelState.IsValid)
+        if (!ModelState.IsValid)
             return View(editarVm);
 
         var sala = _mapeador.Map<Sala>(editarVm);

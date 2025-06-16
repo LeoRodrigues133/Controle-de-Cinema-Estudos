@@ -32,33 +32,55 @@
 
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between mt-3">
                     <ul class="navbar-nav flex-grow-1 fw-bolder">
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Sala" asp-action="Listar">Salas</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Categoria" asp-action="Listar">Categorias</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Filme" asp-action="Listar">Filmes</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Sessao" asp-action="Listar">Sessões</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Privacidade</a>
-                        </li>
-                        <li class="nav-item position-relative">
-                            <!-- Botão para abrir o carrinho -->
-                            <button class="btn btn-outline-danger position-relative" type="button" id="btnAbrirCarrinho">
-                                <i class="bi bi-cart"></i>
+                        @if (User.Identity is not null && User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Sala" asp-action="Listar">Salas</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Categoria" asp-action="Listar">Categorias</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Filme" asp-action="Listar">Filmes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Sessao" asp-action="Listar">Sessões</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Privacidade</a>
+                            </li>
+                            <li class="nav-item position-relative">
+                                <!-- Botão para abrir o carrinho -->
+                                <button class="btn btn-outline-danger position-relative" type="button" id="btnAbrirCarrinho">
+                                    <i class="bi bi-cart"></i>
                                     <span id="badgeCarrinho"
                                           class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                     </span>
-                            </button>
-                        </li>
+                                </button>
+                            </li>
+                            <form asp-controller="Autenticacao" asp-action="Logout" class="d-flex gap-2 ms-2">
+                                <a href="#" class="btn btn-outline-danger px-3">
+                                    <i class="bi bi-person-vcard-fill"></i>
+                                    @User.Identity.Name
+                                </a>
+
+                                <button class="btn btn-secondary px-3">
+                                    <i class="bi bi-box-arrow-right"></i>
+                                    Logout
+                                </button>
+                            </form>
+                        }
+                        else
+                        {
+                            <div class="col-md-3 text-end">
+                                <a asp-controller="Autenticacao" asp-action="Login" class="btn btn-outline-light"><i class="bi bi-person"></i>Login</a>
+                                <a asp-controller="Autenticacao" asp-action="Registrar" class="btn btn-outline-light"><i class="bi bi-person-add"></i>Registrar</a>
+                            </div>
+                        }
 
 
 

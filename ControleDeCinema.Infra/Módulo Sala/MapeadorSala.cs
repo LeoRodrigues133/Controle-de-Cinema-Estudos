@@ -26,5 +26,15 @@ public class MapeadorSala : IEntityTypeConfiguration<Sala>
             .IsRequired()
             .HasColumnType("bit");
 
+        builder.Property(s => s.EmpresaId)
+            .HasColumnType("int")
+            .HasColumnName("Empresa_Id")
+            .IsRequired();
+
+        builder.HasOne(g => g.Empresa)
+            .WithMany()
+            .HasForeignKey(s => s.EmpresaId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
+
 }

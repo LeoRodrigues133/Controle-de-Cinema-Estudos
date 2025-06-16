@@ -28,7 +28,7 @@ public class MapeamentoSessao : IEntityTypeConfiguration<Sessão>
 
         builder.HasOne(x => x.Sala)
             .WithMany()
-            .HasForeignKey(x=>x.SalaId);
+            .HasForeignKey(x => x.SalaId);
 
         builder.Property(x => x.SalaId)
             .HasColumnType("int")
@@ -37,10 +37,16 @@ public class MapeamentoSessao : IEntityTypeConfiguration<Sessão>
         builder.Property(x => x.DataDeExibicao)
             .HasColumnType("datetime2")
             .IsRequired();
-        
+
         builder.Property(x => x.HorarioDaSessao)
             .HasColumnType("time")
             .IsRequired();
+
+        builder.HasOne(x => x.Usuario)
+            .WithMany()
+            .HasForeignKey("Usuario_Id")
+            .IsRequired()
+            .OnDelete(DeleteBehavior.NoAction);
 
     }
 }

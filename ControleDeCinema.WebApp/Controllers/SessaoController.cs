@@ -1,10 +1,13 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ControleDeCinema.Domínio;
-using ControleDeCinema.Aplicação;
 using ControleDeCinema.WebApp.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ControleDeCinema.WebApp.Controllers.Compartilhado;
+using ControleDeCinema.Aplicação.Services.FilmeService;
+using ControleDeCinema.Aplicação.Services.SalaService;
+using ControleDeCinema.Aplicação.Services.SessãoService;
+using ControleDeCinema.Aplicação.AutenticaçãoService;
 
 namespace ControleDeCinema.WebApp.Controllers;
 public class SessaoController : WebController
@@ -18,8 +21,8 @@ public class SessaoController : WebController
         SessaoService sessaoService,
         FilmeService filmeService,
         SalaService salaService,
-        IMapper mapper
-        )
+        IMapper mapper,
+        AutenticacaoService authService) : base(authService)
     {
         _sessaoService = sessaoService;
         _filmeService = filmeService;

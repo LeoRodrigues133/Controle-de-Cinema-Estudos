@@ -28,5 +28,11 @@ public class MapeadorFilme : IEntityTypeConfiguration<Filme>
         builder.Property(x => x.CategoriaId)
             .HasColumnType("int")
             .IsRequired();
+
+        builder.HasOne(x => x.Usuario)
+            .WithMany()
+            .HasForeignKey("Usuario_Id")
+            .IsRequired()
+            .OnDelete(DeleteBehavior.NoAction);
     }
 }

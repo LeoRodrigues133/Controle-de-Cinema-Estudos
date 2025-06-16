@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
-using ControleDeCinema.Aplicação;
 using ControleDeCinema.Domínio;
-using ControleDeCinema.WebApp.Controllers.Compartilhado;
-using ControleDeCinema.WebApp.Models;
 using Microsoft.AspNetCore.Mvc;
+using ControleDeCinema.WebApp.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using ControleDeCinema.Aplicação.Services.FilmeService;
+using ControleDeCinema.WebApp.Controllers.Compartilhado;
+using ControleDeCinema.Aplicação.Services.CategoriaService;
+using ControleDeCinema.Aplicação.AutenticaçãoService;
 
 namespace ControleDeCinema.WebApp.Controllers;
 public class FilmeController : WebController
@@ -13,7 +15,7 @@ public class FilmeController : WebController
     readonly CategoriaService _categoriaService;
     readonly IMapper _mapper;
 
-    public FilmeController(FilmeService filmeService, CategoriaService categoriaService, IMapper mapper)
+    public FilmeController(FilmeService filmeService, CategoriaService categoriaService, IMapper mapper, AutenticacaoService authService) : base(authService)
     {
         _filmeService = filmeService;
         _categoriaService = categoriaService;

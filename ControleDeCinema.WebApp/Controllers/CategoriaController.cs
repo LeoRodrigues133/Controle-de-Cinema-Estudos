@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using ControleDeCinema.Aplicação;
+using ControleDeCinema.Aplicação.AutenticaçãoService;
+using ControleDeCinema.Aplicação.Services.CategoriaService;
 using ControleDeCinema.Domínio;
 using ControleDeCinema.WebApp.Controllers.Compartilhado;
 using ControleDeCinema.WebApp.Models;
@@ -11,7 +12,7 @@ public class CategoriaController : WebController
     readonly CategoriaService _categoriaService;
     readonly IMapper _mapper;
 
-    public CategoriaController(CategoriaService categoriaService, IMapper mapper)
+    public CategoriaController(CategoriaService categoriaService, IMapper mapper, AutenticacaoService authService) : base(authService)
     {
         _categoriaService = categoriaService;
         _mapper = mapper;

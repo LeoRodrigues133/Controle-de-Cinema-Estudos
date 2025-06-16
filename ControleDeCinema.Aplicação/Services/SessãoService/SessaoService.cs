@@ -2,7 +2,7 @@
 using ControleDeCinema.Domínio.Módulo_Sessão;
 using FluentResults;
 
-namespace ControleDeCinema.Aplicação;
+namespace ControleDeCinema.Aplicação.Services.SessãoService;
 public class SessaoService
 {
     readonly IRepositorioSessao _repositorioSessao;
@@ -126,7 +126,7 @@ public class SessaoService
             return Result.Fail("Sessão não encontrada.");
 
         sessao.Encerrar();
-        sessao.Sala.Desocupar();
+        //sessao.Sala.Desocupar();
 
         _repositorioSessao.Editar(sessao);
 

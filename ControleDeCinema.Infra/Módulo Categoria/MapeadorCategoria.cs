@@ -16,5 +16,11 @@ internal class MapeadorCategoria : IEntityTypeConfiguration<Categoria>
         builder.Property(x => x.Nome)
             .HasColumnType("varchar(100)")
             .IsRequired();
+
+        builder.HasOne(x => x.Usuario)
+            .WithMany()
+            .HasForeignKey("Usuario_Id")
+            .IsRequired()
+            .OnDelete(DeleteBehavior.NoAction);
     }
 }

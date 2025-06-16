@@ -1,7 +1,7 @@
 ﻿using ControleDeCinema.Domínio;
 using FluentResults;
 
-namespace ControleDeCinema.Aplicação;
+namespace ControleDeCinema.Aplicação.Services.FilmeService;
 public class FilmeService
 {
     readonly IRepositorioFilme _repositorioFilme;
