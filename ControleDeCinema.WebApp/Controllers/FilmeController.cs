@@ -7,8 +7,11 @@ using ControleDeCinema.Aplicação.Services.FilmeService;
 using ControleDeCinema.WebApp.Controllers.Compartilhado;
 using ControleDeCinema.Aplicação.Services.CategoriaService;
 using ControleDeCinema.Aplicação.Services.AutenticaçãoService;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ControleDeCinema.WebApp.Controllers;
+
+[Authorize(Roles = "Empresa")]
 public class FilmeController : WebController
 {
     readonly FilmeService _filmeService;

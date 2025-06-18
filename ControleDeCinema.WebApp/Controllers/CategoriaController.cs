@@ -5,8 +5,11 @@ using ControleDeCinema.WebApp.Models;
 using ControleDeCinema.WebApp.Controllers.Compartilhado;
 using ControleDeCinema.Aplicação.Services.CategoriaService;
 using ControleDeCinema.Aplicação.Services.AutenticaçãoService;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ControleDeCinema.WebApp.Controllers;
+
+[Authorize(Roles = "Empresa")]
 public class CategoriaController : WebController
 {
     readonly CategoriaService _categoriaService;

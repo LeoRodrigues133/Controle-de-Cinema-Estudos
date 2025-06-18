@@ -66,7 +66,6 @@ public class SalaController : WebController
     }
 
     [HttpPost]
-    //[ValidateAntiForgeryToken]
     public IActionResult Cadastrar(CadastrarSalaViewModel cadastrarVm)
     {
         if (!ModelState.IsValid)
@@ -110,7 +109,6 @@ public class SalaController : WebController
     }
 
     [HttpPost]
-    //[ValidateAntiForgeryToken]
     public IActionResult Editar(EditarSalaViewModel editarVm)
     {
         if (!ModelState.IsValid)
@@ -152,7 +150,6 @@ public class SalaController : WebController
     }
 
     [HttpPost]
-    //[ValidateAntiForgeryToken]
     public IActionResult Excluir(ExcluirSalaViewModel excluirVm)
     {
         var resultado = _salaService.Excluir(excluirVm.Id);

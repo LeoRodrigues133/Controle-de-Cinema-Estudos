@@ -8,8 +8,11 @@ using ControleDeCinema.Aplicação.Services.FilmeService;
 using ControleDeCinema.Aplicação.Services.SalaService;
 using ControleDeCinema.Aplicação.Services.SessãoService;
 using ControleDeCinema.Aplicação.Services.AutenticaçãoService;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ControleDeCinema.WebApp.Controllers;
+
+[Authorize(Roles = "Empresa")]
 public class SessaoController : WebController
 {
     readonly SessaoService _sessaoService;
@@ -72,7 +75,6 @@ public class SessaoController : WebController
     }
 
     [HttpPost]
-    //[ValidateAntiForgeryToken]
     public IActionResult Cadastrar(SessaoFormViewModel cadastrasVM)
      {
         if (!ModelState.IsValid)
@@ -114,7 +116,6 @@ public class SessaoController : WebController
     }
 
     [HttpPost]
-    //[ValidateAntiForgeryToken]
     public IActionResult Editar(SessaoFormViewModel editarVm)
     {
         if (!ModelState.IsValid)
@@ -227,7 +228,6 @@ public class SessaoController : WebController
     }
 
     [HttpPost]
-    //[ValidateAntiForgeryToken]
     public IActionResult Encerrar(EncerrarSessaoViewModel excluirVm)
     {
         var resultado = _sessaoService.Encerrar(excluirVm.Id);

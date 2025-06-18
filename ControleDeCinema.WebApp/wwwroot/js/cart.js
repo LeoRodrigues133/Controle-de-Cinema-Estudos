@@ -64,9 +64,9 @@
 
             if (this.checked) {
                 icone.classList.remove('text-success');
-                icone.classList.add('text-warning');
+                icone.classList.add('text-wrning');
             } else {
-                icone.classList.remove('text-warning');
+                icone.classList.remove('text-wrning');
                 icone.classList.add('text-success');
             }
 
