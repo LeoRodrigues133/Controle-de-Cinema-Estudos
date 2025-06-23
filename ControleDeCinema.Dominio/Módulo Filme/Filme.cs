@@ -1,4 +1,5 @@
-﻿namespace ControleDeCinema.Domínio;
+﻿
+namespace ControleDeCinema.Domínio;
 
 public class Filme : EntidadeBase
 {
@@ -20,4 +21,23 @@ public class Filme : EntidadeBase
     public int Duracao { get; set; }
     public int CategoriaId { get; set; }
     public Categoria? Categoria { get; set; }
+
+    public override List<string> Validar()
+    {
+        var erros = new List<string>();
+
+        if (Categoria is null)
+             erros.Add("O filme deve conter uma categoria");
+
+        if (string.IsNullOrEmpty(Nome))
+            erros.Add("Nome inválido.");
+
+        if (Duracao < 1)
+            erros.Add("Duração inválido.");
+
+        if (Categoria is null)
+            erros.Add("O filme deve conter uma categoria.");
+
+        return erros;
+    }
 }

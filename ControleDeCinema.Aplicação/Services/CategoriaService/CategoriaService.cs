@@ -13,10 +13,10 @@ public class CategoriaService
 
     public Result<Categoria> Cadastrar(Categoria categoria)
     {
-        #region Erros
-        if (string.IsNullOrEmpty(categoria.Nome) || categoria.Nome.Length < 1)
-            return Result.Fail("Nome inválido.");
-        #endregion
+        var erros = categoria.Validar();
+
+        if(erros.Count > 0)
+            return Result.Fail(erros);
 
         _repositorioCategoria.Inserir(categoria);
 
@@ -25,10 +25,10 @@ public class CategoriaService
 
     public Result<Categoria> Editar(Categoria categoria)
     {
-        #region Erros
-        if (string.IsNullOrEmpty(categoria.Nome) || categoria.Nome.Length < 1)
-            return Result.Fail("Nome inválido.");
-        #endregion
+        var erros = categoria.Validar();
+
+        if (erros.Count > 0)
+            return Result.Fail(erros);
 
         _repositorioCategoria.Editar(categoria);
 
@@ -39,7 +39,7 @@ public class CategoriaService
     {
         var categoria = _repositorioCategoria.SelecionarPorId(id);
 
-        if (categoria == null)
+        if (categoria is null)
             return Result.Fail("Registro não encontrado.");
 
         _repositorioCategoria.Excluir(categoria);
@@ -51,7 +51,7 @@ public class CategoriaService
     {
         var categoria = _repositorioCategoria.SelecionarPorId(id);
 
-        if (categoria == null)
+        if (categoria is null)
             return Result.Fail("Categoria não encontrada.");
 
         return Result.Ok(categoria);
@@ -61,7 +61,7 @@ public class CategoriaService
     {
         var categorias = _repositorioCategoria.Filtrar(x => x.EmpresaId == empresaId);
 
-        if (categorias == null)
+        if (categorias is null)
             return Result.Fail("Nenhuma categoria encontrada.");
 
         return Result.Ok(categorias);

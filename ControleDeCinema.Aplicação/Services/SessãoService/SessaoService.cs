@@ -54,21 +54,10 @@ public class SessaoService
         sessao.Assentos = sessao.GerarAssentos();
         sessao.Sala.Ocupar();
 
-        #region Erros
+        var erros = sessao.Validar();
 
-        if (sessao.Sala is null)
-            return Result.Fail("A sessão deve conter um sala.");
-
-        if (sessao.Filme is null)
-            return Result.Fail("A sessao deve conter um filme");
-
-        if (sessao.DataDeExibicao < DateTime.Today)
-            return Result.Fail("A sessão precisa iniciar em uma data futura");
-        
-        if (sessao.DataDeExibicao == DateTime.Today && sessao.HorarioDaSessao < DateTime.Now.TimeOfDay)
-            return Result.Fail("A sessão precisa iniciar em um horário futuro");
-
-        #endregion
+        if (erros.Count > 0)
+            return Result.Fail(erros);
 
         _repositorioSessao.Inserir(sessao);
 
@@ -92,12 +81,11 @@ public class SessaoService
         sessao.Sala.Ocupar();
 
         sessao.Assentos = sessao.GerarAssentos();
-        #region Erros
 
-        if (sessao.DataDeExibicao < DateTime.Now)
-            return Result.Fail("A sessão precisa iniciar em uma data futura!");
+        var erros = sessao.Validar();
 
-        #endregion
+        if (erros.Count > 0)
+            return Result.Fail(erros);
 
         _repositorioSessao.Editar(sessao);
 

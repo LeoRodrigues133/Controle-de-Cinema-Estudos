@@ -1,4 +1,6 @@
-﻿namespace ControleDeCinema.Domínio;
+﻿using static System.Runtime.InteropServices.JavaScript.JSType;
+
+namespace ControleDeCinema.Domínio;
 
 public class Sessão : EntidadeBase
 {
@@ -66,4 +68,22 @@ public class Sessão : EntidadeBase
         return Assentos;
     }
 
+    public override List<string> Validar()
+    {
+        var erros = new List<string>();
+
+        if (Sala is null)
+            erros.Add("A sessão deve conter um sala.");
+
+        if (Filme is null)
+            erros.Add("A sessao deve conter um filme");
+
+        if (DataDeExibicao < DateTime.Today)
+            erros.Add("A sessão precisa iniciar em uma data futura");
+
+        if (DataDeExibicao == DateTime.Today && HorarioDaSessao < DateTime.Now.TimeOfDay)
+            erros.Add("A sessão precisa iniciar em um horário futuro");
+
+        return erros;
+    }
 }

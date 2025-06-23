@@ -1,4 +1,5 @@
-﻿namespace ControleDeCinema.Domínio;
+﻿
+namespace ControleDeCinema.Domínio;
 
 public class Assento : EntidadeBase
 {
@@ -24,4 +25,16 @@ public class Assento : EntidadeBase
         Disponivel = true;
     }
 
+    public override List<string> Validar()
+    {
+        var erros = new List<string>();
+
+        if (string.IsNullOrWhiteSpace(Numero))
+            erros.Add("O número do assento é obrigatório.");
+
+        if (SessaoId <= 0)
+            erros.Add("Sessão inválida para o assento.");
+
+        return erros;
+    }
 }

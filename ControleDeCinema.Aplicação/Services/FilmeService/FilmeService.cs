@@ -40,20 +40,10 @@ public class FilmeService
 
         filme.Categoria = categoria;
 
-        #region Erros
-        if (filme.Categoria is null)
-            return Result.Fail("O filme deve conter uma categoria");
+        var erros = filme.Validar();
 
-        if (string.IsNullOrEmpty(filme.Nome))
-            return Result.Fail("Nome inválido.");
-
-        if (filme.Duracao < 1)
-            return Result.Fail("Duração inválido.");
-
-        if (filme.Categoria is null)
-            return Result.Fail("O filme deve conter uma categoria.");
-        #endregion
-
+        if(erros.Count >  0)
+            return Result.Fail(erros);
 
         _repositorioFilme.Inserir(filme);
 
@@ -62,13 +52,10 @@ public class FilmeService
 
     public Result<Filme> Editar(Filme filme)
     {
-        #region Erros
-        if (string.IsNullOrEmpty(filme.Nome))
-            return Result.Fail($"Nome inválido.");
+        var erros = filme.Validar();
 
-        if (filme.Duracao < 1)
-            return Result.Fail($"Duração inválido.");
-        #endregion
+        if (erros.Count > 0)
+            return Result.Fail(erros);
 
         _repositorioFilme.Editar(filme);
 
