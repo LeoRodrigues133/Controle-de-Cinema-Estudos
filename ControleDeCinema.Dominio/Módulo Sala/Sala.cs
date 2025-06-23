@@ -1,4 +1,5 @@
 ﻿
+
 namespace ControleDeCinema.Domínio;
 
 public class Sala : EntidadeBase
@@ -24,4 +25,17 @@ public class Sala : EntidadeBase
         Disponivel = false;
     }
 
+    public override List<string> Validar()
+    {
+        
+        var erros = new List<string>();
+
+        if (string.IsNullOrEmpty(Nome) || Nome.Length < 1)
+            erros.Add("Nome inválido.");
+
+        if (Capacidade < 1)
+            erros.Add("Capacidade inválido.");
+
+        return erros;
+    }
 }

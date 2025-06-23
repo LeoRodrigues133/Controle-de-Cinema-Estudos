@@ -26,7 +26,7 @@ public class Program
         #region Injeçao de Dependências
         builder.Services.AddDbContext<CinemaDbContext>();
 
-        builder.Services.AddScoped<IRepositorioSala, RepositorioDeSalaOrm>();
+        builder.Services.AddScoped<IRepositorioSala, RepositorioSalaEmOrm>();
         builder.Services.AddScoped<IRepositorioCategoria, RepositorioCategoriaEmOrm>();
         builder.Services.AddScoped<IRepositorioFilme, RepositorioFilmeEmOrm>();
         builder.Services.AddScoped<IRepositorioSessao, RepositorioSessaoEmOrm>();

@@ -3,9 +3,9 @@ using ControleDeCinema.Infra.Compartilhado;
 using Microsoft.EntityFrameworkCore;
 
 namespace ControleDeCinema.Infra.Módulo_Sala;
-public class RepositorioDeSalaOrm : RepositorioBaseEmOrm<Sala>, IRepositorioSala
+public class RepositorioSalaEmOrm : RepositorioBaseEmOrm<Sala>, IRepositorioSala
 {
-    public RepositorioDeSalaOrm(CinemaDbContext dbContext) : base(dbContext)
+    public RepositorioSalaEmOrm(CinemaDbContext dbContext) : base(dbContext)
     {
     }
     protected override DbSet<Sala> ObterRegistro()

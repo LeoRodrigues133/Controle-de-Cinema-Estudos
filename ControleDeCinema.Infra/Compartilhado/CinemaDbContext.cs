@@ -13,6 +13,7 @@ public class CinemaDbContext : IdentityDbContext<Usuario, Perfil, int>
     public DbSet<Filme> Filmes { get; set; }
     public DbSet<Assento> Assentos { get; set; }
     public DbSet<Sessão> Sessaos { get; internal set; }
+    public DbSet<Usuario> Usuarios { get; internal set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -50,11 +51,9 @@ public class CinemaDbContext : IdentityDbContext<Usuario, Perfil, int>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
 
-        modelBuilder.ApplyConfiguration(new MapeadorSala());
-        modelBuilder.ApplyConfiguration(new MapeadorCategoria());
-        modelBuilder.ApplyConfiguration(new MapeadorFilme());
-        modelBuilder.ApplyConfiguration(new MapeamentoAssento());
-        modelBuilder.ApplyConfiguration(new MapeamentoSessao());
+        var assembly = typeof(CinemaDbContext).Assembly;
+
+        modelBuilder.ApplyConfigurationsFromAssembly(assembly);
 
         base.OnModelCreating(modelBuilder);
     }

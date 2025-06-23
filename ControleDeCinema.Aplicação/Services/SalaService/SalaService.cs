@@ -14,13 +14,10 @@ public class SalaService
 
     public Result<Sala> Cadastrar(Sala sala)
     {
-        #region Erros
-        if (string.IsNullOrEmpty(sala.Nome) || sala.Nome.Length < 1)
-            Result.Fail("Nome inválido.");
+        var erros = sala.Validar();
 
-        if (sala.Capacidade < 1)
-            Result.Fail("Capacidade inválido.");
-        #endregion
+        if (erros.Count > 0)
+            return Result.Fail(erros);
 
         _repositorioSala.Inserir(sala);
 
@@ -29,12 +26,10 @@ public class SalaService
 
     public Result<Sala> Editar(Sala sala)
     {
-        #region Erros
-        if (string.IsNullOrEmpty(sala.Nome) || sala.Nome.Length < 1)
-            Result.Fail("Nome inválido.");
-        if (sala.Capacidade < 1)
-            Result.Fail("Capacidade inválido.");
-        #endregion
+        var erros = sala.Validar();
+
+        if (erros.Count > 0)
+            return Result.Fail(erros);
 
         _repositorioSala.Editar(sala);
 
@@ -44,7 +39,7 @@ public class SalaService
     {
         var sala = _repositorioSala.SelecionarPorId(id);
 
-        if (sala == null)
+        if (sala is null)
             return Result.Fail("Registro não encontrado.");
 
         _repositorioSala.Excluir(sala);
