@@ -1,123 +1,147 @@
 ﻿document.addEventListener("DOMContentLoaded", function () {
-    const maisMeia = document.getElementById('maisMeia');
-    const menosMeia = document.getElementById('menosMeia');
-    const maisInteira = document.getElementById('maisInteira');
-    const menosInteira = document.getElementById('menosInteira');
+    const get = id => document.getElementById(id);
     const checkboxes = document.querySelectorAll('.assento-checkbox');
-    const meiasInput = document.getElementById('meiasInput');
-    const inteirasInput = document.getElementById('inteirasInput');
-    const erroDistribuicao = document.getElementById('erroDistribuicao');
-    const valorTotal = document.getElementById('valorTotal');
-    const dadosCarrinho = document.getElementById('dadosCarrinho');
-    const btnFinalizar = document.getElementById('btnFinalizar');
+
+    const maisMeia = get('maisMeia');
+    const menosMeia = get('menosMeia');
+    const maisInteira = get('maisInteira');
+    const menosInteira = get('menosInteira');
+
+    const meiasInput = get('meiasInput');
+    const inteirasInput = get('inteirasInput');
+
+    const erroDistribuicao = get('erroDistribuicao');
+    const valorTotal = get('valorTotal');
+    const dadosCarrinho = get('dadosCarrinho');
+    const btnFinalizar = get('btnFinalizar');
+    const restantes = get('restantes');
+    const btnAbrir = get('btnAbrirCarrinho');
+    const carrinho = new bootstrap.Offcanvas('#carrinhoOffcanvas', { backdrop: false });
+
+    function atualizarVisualAssento(cb, tipo) {
+        const id = cb.dataset.id;
+        const icone = document.querySelector(`.icone-assento-${id}`);
+        const card = document.querySelector(`.card-assento-${id}`);
+
+        if (cb.checked) {
+            card.classList.add('border-warning');
+        }
+
+        if (cb.checked) {
+            card.classList.replace('border-success', 'border-warning');
+            icone.classList.remove('bi-emoji-neutral');
+            icone.classList.add('bi-emoji-laughing');
+
+            icone.classList.remove('text-white', 'text-info', 'text-warning');
+
+            if (tipo === 'meia') icone.classList.add('text-info');
+            else if (tipo === 'inteira') icone.classList.add('text-warning');
+            else if (tipo === "indefinido") {
+                card.classList.replace('border-success', 'border-warning');
+                icone.classList.remove('text-warning', 'text-info', 'text-danger');
+                icone.classList.add('text-white');
+                icone.classList.remove('bi-emoji-heart-eyes');
+                icone.classList.add('bi-emoji-neutral');
+            } else {
+                // tipo === null → resetar para neutro
+                card.classList.replace('border-warning', 'border-success');
+                icone.classList.remove('bi-emoji-laughing', 'bi-emoji-heart-eyes');
+                icone.classList.add('bi-emoji-neutral', 'text-white');
+                icone.classList.remove('text-warning', 'text-info', 'text-danger');
+            }
+        } else if (!cb.disabled) {
+            card.classList.replace('border-warning', 'border-success');
+            icone.classList.remove('bi-emoji-laughing');
+            icone.classList.add('bi-emoji-neutral', 'text-white');
+            icone.classList.remove('text-warning', 'text-info');
+        }
+    }
 
     function atualizarCarrinho() {
-        const assentosSelecionados = Array.from(checkboxes).filter(cb => cb.checked).map(cb => cb.value);
-        const total = assentosSelecionados.length;
-
         let meias = parseInt(meiasInput.value) || 0;
         let inteiras = parseInt(inteirasInput.value) || 0;
+
+        const selecionados = Array.from(checkboxes).filter(cb => cb.checked);
+        const total = selecionados.length;
+
+        // Corrige valores
+        meias = Math.min(meias, total - inteiras);
+        inteiras = Math.min(inteiras, total - meias);
 
         meiasInput.max = total - inteiras;
         inteirasInput.max = total - meias;
 
-        if (meias > total - inteiras) meias = meiasInput.value = total - inteiras;
-        if (inteiras > total - meias) inteiras = inteirasInput.value = total - meias;
+        meiasInput.value = meias;
+        inteirasInput.value = inteiras;
 
         const soma = meias + inteiras;
-        const restantes = total - soma;
-        document.getElementById('restantes').innerText = restantes;
+        restantes.innerText = total - soma;
 
-        if (soma > total) {
-            erroDistribuicao.classList.remove('d-none');
-            btnFinalizar.disabled = true;
-        } else {
-            erroDistribuicao.classList.add('d-none');
-            btnFinalizar.disabled = false;
-        }
+        const erro = soma > total;
+        erroDistribuicao.classList.toggle('d-none', !erro);
+        btnFinalizar.disabled = erro;
 
-        const totalValor = (meias * 10) + (inteiras * 20);
-        valorTotal.innerText = totalValor.toFixed(2);
+        valorTotal.innerText = (meias * 17.50 + inteiras * 34.99).toFixed(2);
 
+        // Atualiza carrinho e visual
         dadosCarrinho.innerHTML = '';
-        let usados = 0;
+        const meiasSelecionados = selecionados.slice(0, meias);
+        const inteirasSelecionados = selecionados.slice(meias, meias + inteiras);
 
-        for (let i = 0; i < meias && usados < total; i++, usados++) {
+        meiasSelecionados.forEach(cb => {
+            atualizarVisualAssento(cb, 'meia');
             dadosCarrinho.innerHTML += `
-                <input type="hidden" name="AssentosSelecionados" value="${assentosSelecionados[usados]}" />
-                <input type="hidden" name="TipoEntrada[${assentosSelecionados[usados]}]" value="meia" />
+                <input type="hidden" name="AssentosSelecionados" value="${cb.value}" />
+                <input type="hidden" name="TipoEntrada[${cb.value}]" value="meia" />
             `;
-        }
+        });
 
-        for (let i = 0; i < inteiras && usados < total; i++, usados++) {
+        inteirasSelecionados.forEach(cb => {
+            atualizarVisualAssento(cb, 'inteira');
             dadosCarrinho.innerHTML += `
-                <input type="hidden" name="AssentosSelecionados" value="${assentosSelecionados[usados]}" />
-                <input type="hidden" name="TipoEntrada[${assentosSelecionados[usados]}]" value="inteira" />
+                <input type="hidden" name="AssentosSelecionados" value="${cb.value}" />
+                <input type="hidden" name="TipoEntrada[${cb.value}]" value="inteira" />
             `;
-        }
+        });
+
+        // Resetar visual dos restantes
+        selecionados.forEach(cb => {
+            if (!meiasSelecionados.includes(cb) && !inteirasSelecionados.includes(cb)) {
+                atualizarVisualAssento(cb, "indefinido");
+            }
+        });
     }
 
+    // Eventos checkbox
     checkboxes.forEach(cb => {
-        cb.addEventListener('change', function () {
-            const assentoId = this.dataset.id;
-            const icone = document.querySelector('.icone-assento-' + assentoId);
-
-            if (this.checked) {
-                icone.classList.remove('text-success');
-                icone.classList.add('text-wrning');
-            } else {
-                icone.classList.remove('text-wrning');
-                icone.classList.add('text-success');
-            }
-
+        cb.addEventListener('change', () => {
+            atualizarVisualAssento(cb, null);
             atualizarCarrinho();
         });
     });
 
+    // Eventos de input manual
     meiasInput.addEventListener('input', atualizarCarrinho);
     inteirasInput.addEventListener('input', atualizarCarrinho);
 
-    maisMeia.addEventListener('click', () => {
-        let meias = parseInt(meiasInput.value) || 0;
-        let inteiras = parseInt(inteirasInput.value) || 0;
-        let total = Array.from(checkboxes).filter(cb => cb.checked).length;
+    // Eventos de incremento/decremento
+    function alterarValor(input, delta) {
+        let valor = parseInt(input.value) || 0;
+        const total = Array.from(checkboxes).filter(cb => cb.checked).length;
+        const outroValor = input === meiasInput ? parseInt(inteirasInput.value) || 0 : parseInt(meiasInput.value) || 0;
 
-        if (meias + inteiras < total) {
-            meiasInput.value = meias + 1;
-            atualizarCarrinho();
-        }
-    });
+        if (delta > 0 && valor + outroValor < total) input.value = valor + 1;
+        if (delta < 0 && valor > 0) input.value = valor - 1;
 
-    menosMeia.addEventListener('click', () => {
-        let meias = parseInt(meiasInput.value) || 0;
-        if (meias > 0) {
-            meiasInput.value = meias - 1;
-            atualizarCarrinho();
-        }
-    });
+        atualizarCarrinho();
+    }
 
-    maisInteira.addEventListener('click', () => {
-        let meias = parseInt(meiasInput.value) || 0;
-        let inteiras = parseInt(inteirasInput.value) || 0;
-        let total = Array.from(checkboxes).filter(cb => cb.checked).length;
+    maisMeia.addEventListener('click', () => alterarValor(meiasInput, 1));
+    menosMeia.addEventListener('click', () => alterarValor(meiasInput, -1));
+    maisInteira.addEventListener('click', () => alterarValor(inteirasInput, 1));
+    menosInteira.addEventListener('click', () => alterarValor(inteirasInput, -1));
 
-        if (meias + inteiras < total) {
-            inteirasInput.value = inteiras + 1;
-            atualizarCarrinho();
-        }
-    });
-
-    menosInteira.addEventListener('click', () => {
-        let inteiras = parseInt(inteirasInput.value) || 0;
-        if (inteiras > 0) {
-            inteirasInput.value = inteiras - 1;
-            atualizarCarrinho();
-        }
-    });
-
-    const btnAbrir = document.getElementById('btnAbrirCarrinho');
-    const carrinho = new bootstrap.Offcanvas('#carrinhoOffcanvas', { backdrop: false });
-
+    // Botão abrir carrinho
     btnAbrir.addEventListener('click', () => {
         carrinho.show();
         setTimeout(() => {

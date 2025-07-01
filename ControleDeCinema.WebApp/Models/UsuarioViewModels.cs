@@ -26,7 +26,7 @@ public class RegistrarViewModel
 
     [DataType(DataType.Password)]
     [Display(Name = "Confirmar senha")]
-    [Compare("Senha", ErrorMessage = "As senhas não conferem")]
+    [Compare("Senha", ErrorMessage = "As senhas não coincidem")]
     public string? ConfirmaSenha { get; set; }
 
     [Required]

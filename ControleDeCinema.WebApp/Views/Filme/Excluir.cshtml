@@ -1,39 +1,49 @@
-﻿@model ExcluirFilmeViewModel;
+﻿@model ExcluirFilmeViewModel
 
 @{
     ViewBag.Title = "Excluir Filme";
     Layout = "_Layout";
 }
 
-<div class="card border-danger">
-    <div class="card-header bg-danger text-white">
-        <h4 class="mb-0">Excluir Filme</h4>
-    </div>
-
+<div class="card bg-dark text-white shadow-sm border-0 mt-4">
     <div class="card-body">
-        <h5>Tem certeza que deseja excluir este filme?</h5>
-
-        <dl class="row mt-4">
-            <dt class="col-sm-3">ID</dt>
-            <dd class="col-sm-9">@Model.Id</dd>
-
-            <dt class="col-sm-3">Nome</dt>
-            <dd class="col-sm-9">@Model.Nome</dd>
-
-            <dt class="col-sm-3">Duração (minutos)</dt>
-            <dd class="col-sm-9">@Model.Duracao</dd>
-
-            <dt class="col-sm-3">Categoria</dt>
-            <dd class="col-sm-9">@Model.Categoria.Nome</dd>
-        </dl>
-
-        <form asp-action="Excluir">
-            <input type="hidden" asp-for="Id" />
-
-            <div class="d-flex justify-content-between">
-                <a asp-action="Listar" class="btn btn-secondary">Cancelar</a>
-                <button type="submit" class="btn btn-danger">Excluir</button>
+        <div class="alert alert-warning border border-warning d-flex align-items-center">
+            <i class="bi bi-exclamation-triangle-fill me-2 fs-4"></i>
+            <div>
+                <h5 class="alert-heading mb-1">Tem certeza que deseja excluir este filme?</h5>
+                <p class="mb-0">Essa ação <strong>não poderá ser desfeita</strong>.</p>
             </div>
+        </div>
+
+        <div class="card border border-danger mt-4">
+            <div class="card-header bg-danger text-white fw-bold">
+                Dados do Filme
+            </div>
+            <div class="card-body">
+                <dl class="row mb-0 text-black">
+                    <dt class="col-sm-3">ID</dt>
+                    <dd class="col-sm-9">@Model.Id</dd>
+
+                    <dt class="col-sm-3">Nome</dt>
+                    <dd class="col-sm-9">@Model.Nome</dd>
+
+                    <dt class="col-sm-3">Duração (minutos)</dt>
+                    <dd class="col-sm-9">@Model.Duracao</dd>
+
+                    <dt class="col-sm-3">Categoria</dt>
+                    <dd class="col-sm-9">@Model.Categoria.Nome</dd>
+                </dl>
+            </div>
+        </div>
+
+        <form asp-action="Excluir" method="post" class="mt-4 d-flex justify-content-end">
+            <input type="hidden" asp-for="Id" />
+            <button type="submit" class="btn btn-danger me-2">
+                <i class="bi bi-trash-fill me-1"></i> Confirmar Exclusão
+            </button>
+            <a asp-action="Listar" class="btn btn-outline-secondary">
+                <i class="bi bi-x-circle me-1"></i> Cancelar
+            </a>
         </form>
     </div>
 </div>

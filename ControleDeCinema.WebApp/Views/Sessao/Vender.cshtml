@@ -4,7 +4,19 @@
     ViewBag.Title = "Venda de Ingressos";
     Layout = "_Layout";
 }
+<style>
+    .define-assento {
+        transition: all .2s;
+        min-width: 30px;
+        background-color: #404040;
+    }
 
+    .tela {
+        width: 600px;
+        text-align:center;
+        display:block;    
+    }
+</style>
 
 <div class="card bg-dark text-white p-4 mt-3">
     <form asp-action="Vender" method="post">
@@ -25,25 +37,10 @@
         </dl>
 
 
-        <div class="mt-4 mb-3">
-            <label class="form-label">Selecione os Assentos:</label>
-            <div class="d-flex flex-wrap gap-2">
-                @foreach (var assento in Model.Assentos)
-                {
-                    <div class="form-check">
-                        <input class="form-check-input assento-checkbox" type="checkbox" name="AssentosSelecionados" hidden
-                               value="@assento.Id" id="assento-@assento.Id" data-id="@assento.Id"
-                        @(assento.Disponivel ? "disabled" : "") />
-                        <label class="form-check-label text-white" for="assento-@assento.Id">
-                            <i class="bi bi-person-fill icone-assento-@assento.Id @(assento.Disponivel ? "text-danger" : "text-success")"></i>
-                            @assento.Numero
-                        </label>
-                    </div>
-                }
-            </div>
-        </div>
+        <partial name="_Assentos" model="Model" />
+        <partial name="_Carrinho" model="Model"/>
 
-        <button type="submit" class="btn btn-success">Confirmar Venda</button>
+        <a id="btnAbrirCarrinho" class="btn btn-success">Confirmar Venda</a>
         <a asp-action="Listar" class="btn btn-secondary ms-2">Cancelar</a>
     </form>
 </div>

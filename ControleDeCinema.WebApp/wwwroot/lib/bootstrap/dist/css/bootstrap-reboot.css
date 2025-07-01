@@ -16,7 +16,9 @@
     scroll-behavior: smooth;
   }
 }
-
+.astronaut{
+    transform:scale(2)
+}
 body {
   margin: 0;
   font-family: var(--bs-body-font-family);

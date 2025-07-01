@@ -22,7 +22,7 @@ public class SessaoFormViewModel
 
     [Required(ErrorMessage = "Informe a data da exibição.")]
     [DataType(DataType.Date)]
-    public DateTime DataDeExibicao { get; set; }
+    public DateTime DataDeExibicao { get; set; } = DateTime.UtcNow;
 
     [Required(ErrorMessage = "Informe o horário da sessão.")]
     [DataType(DataType.Time)]
@@ -76,7 +76,10 @@ public class VenderSessaoViewModel
     public TimeSpan HorarioDaSessao { get; set; }
 
     public List<AssentoViewModel>? Assentos { get; set; }
+
+    public List<int>? MeiasEntradas { get; set; }
 }
+
 
 public class AssentoViewModel
 {

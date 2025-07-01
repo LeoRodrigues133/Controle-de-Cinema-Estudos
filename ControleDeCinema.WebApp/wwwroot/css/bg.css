@@ -1,0 +1,43 @@
+﻿.background-wrapper {
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.bg-image {
+    z-index: 0;
+}
+
+
+.z-n1000 {
+    z-index: 1000;
+    text-shadow: 1px 1px 3px black
+}
+.format {
+    opacity: .7;
+    transform: translateX(10%) scale(.6);
+    border-radius: 62% 33% 25% 75% / 53% 51% 49% 47%;
+}
+
+.astronaut {
+    z-index: 0;
+    bottom: 0;
+    left: 50%;
+    opacity:1;
+    transform: translateX(-50%) scale(.6);
+    max-height: 100%;
+    animation: Space 4s ease-in-out infinite;
+}
+
+@keyframes Space {
+    0% {
+        transform: translate(0%, 0);
+    }
+
+    50% {
+        transform: translate(0%, -20px);
+    }
+
+    100% {
+        transform: translate(0%, 0);
+    }
+}

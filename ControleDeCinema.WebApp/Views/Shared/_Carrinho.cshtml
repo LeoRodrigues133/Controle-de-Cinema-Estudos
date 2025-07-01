@@ -1,6 +1,4 @@
-﻿
-
-<!-- Offcanvas lateral -->
+﻿@model VenderSessaoViewModel
 
 <div class="offcanvas offcanvas-end text-black" tabindex="-1" id="carrinhoOffcanvas" aria-labelledby="carrinhoLabel" data-bs-backdrop="false">
 
@@ -16,7 +14,7 @@
             <label class="form-label">Meias-entradas</label>
             <div class="input-group">
                 <button type="button" class="btn btn-outline-secondary" id="menosMeia">−</button>
-                <input type="number" class="form-control text-center" id="meiasInput" min="0" value="0">
+                <input type="text" class="form-control text-center" id="meiasInput" min="0" value="0">
                 <button type="button" class="btn btn-outline-secondary" id="maisMeia">+</button>
             </div>
         </div>
@@ -25,7 +23,7 @@
             <label class="form-label">Inteiras</label>
             <div class="input-group">
                 <button type="button" class="btn btn-outline-secondary" id="menosInteira">−</button>
-                <input type="number" class="form-control text-center" id="inteirasInput" min="0" value="0">
+                <input type="text" class="form-control text-center" id="inteirasInput" min="0" value="0">
                 <button type="button" class="btn btn-outline-secondary" id="maisInteira">+</button>
             </div>
         </div>

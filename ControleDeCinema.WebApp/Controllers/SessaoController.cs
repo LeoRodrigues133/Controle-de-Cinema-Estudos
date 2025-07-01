@@ -191,19 +191,9 @@ public class SessaoController : WebController
 
     private void ApresentarMenssagemDeVenda(List<int> assentosSelecionados, Sessão sessao)
     {
-        List<string> assentosVendidos = new List<string>();
+        var plural = assentosSelecionados.Count > 2 ? "s" : "";
 
-
-        foreach (var a in assentosSelecionados)
-        {
-            var assento = sessao.Assentos.Find(assento => assento.Id == a)!.Numero;
-
-            assentosVendidos.Add(assento);
-
-        }
-        var plural = assentosVendidos.Count > 1 ? "s" : "";
-
-        ApresentarMensagemSucesso($"Assento{plural} [{string.Join(", ", assentosVendidos)}] vendido{plural} para [{sessao.Filme?.Nome}]!");
+        ApresentarMensagemSucesso($"Ingresso{plural} vendido{plural} para [{sessao.Filme?.Nome}]!");
     }
 
     public IActionResult Encerrar(int id)
@@ -256,7 +246,7 @@ public class SessaoController : WebController
 
         Dados.Filmes = filmes.Select(c => new SelectListItem(c.Nome, c.Id.ToString()));
 
-        Dados.Salas = salas.Where(s=>s.Disponivel == true).Select(c => new SelectListItem(c.Nome, c.Id.ToString()));
+        Dados.Salas = salas.Select(c => new SelectListItem(c.Nome, c.Id.ToString()));
 
         return Dados;
     }

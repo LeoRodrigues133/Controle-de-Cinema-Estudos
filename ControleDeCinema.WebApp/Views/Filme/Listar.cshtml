@@ -1,42 +1,60 @@
 ﻿@model List<ListarFilmeViewModel>
 
 @{
-    ViewBag.Title = "Listar Filmes";
+    ViewBag.Title = "Filmes";
     Layout = "_Layout";
 }
 
-<div class="card-body">
-    <div class="card-header d-flex justify-content-between align-items-center">
-        <a asp-action="Cadastrar" class="btn btn-primary">Cadastrar Filme</a>
-    </div>
-
+<div class="card bg-dark border-0 shadow-sm">
     <div class="card-body">
-        <table class="table table-striped text-white">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nome</th>
-                    <th>Categoria</th>
-                    <th>Duração (min)</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var filme in Model)
-                {
-                    <tr class=" text-white">
-                        <td>@filme.Id</td>
-                        <td>@filme.Nome</td>
-                        <td>@filme.Categoria.Nome</td>
-                        <td>@filme.Duracao</td>
-                        <td>
-                            <a asp-action="Detalhar" asp-route-id="@filme.Id" class="btn btn-info btn-sm">Detalhar</a>
-                            <a asp-action="Editar" asp-route-id="@filme.Id" class="btn btn-warning btn-sm">Editar</a>
-                            <a asp-action="Excluir" asp-route-id="@filme.Id" class="btn btn-danger btn-sm">Excluir</a>
-                        </td>
+        <div class="d-flex justify-content-between align-items-center">
+            <a asp-action="Cadastrar" class="btn btn-danger">
+                <i class="bi bi-plus-circle me-1"></i> Novo Filme
+            </a>
+        </div>
+
+        <div class="table-responsive mt-4">
+            <table class="table table-dark table-hover align-middle rounded overflow-hidden">
+                <thead class="table-secondary text-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Categoria</th>
+                        <th>Duração (min)</th>
+                        <th class="text-end">Ações</th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach (var filme in Model)
+                    {
+                        <tr>
+                            <td>@filme.Id</td>
+                            <td>@filme.Nome</td>
+                            <td>@filme.Categoria.Nome</td>
+                            <td>@filme.Duracao</td>
+                            <td class="text-end">
+                                <div class="btn-group" role="group">
+                                    <a asp-action="Detalhes" asp-route-id="@filme.Id"
+                                       class="btn btn-sm btn-outline-warning"
+                                       title="Ver Detalhes">
+                                        <i class="bi bi-info-circle"></i>
+                                    </a>
+                                    <a asp-action="Editar" asp-route-id="@filme.Id"
+                                       class="btn btn-sm btn-outline-primary"
+                                       title="Editar">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                    <a asp-action="Excluir" asp-route-id="@filme.Id"
+                                       class="btn btn-sm btn-outline-danger"
+                                       title="Excluir">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

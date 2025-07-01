@@ -5,40 +5,49 @@
     Layout = "_Layout";
 }
 
-
-<div class="card bg-dark text-white p-4 mt-3">
+<div class="card bg-dark text-white shadow-sm border-0">
     <form asp-action="Editar" method="post">
         <input type="hidden" asp-for="Id" />
 
-        <div class="mb-3">
-            <label asp-for="FilmeId" class="form-label">Filme</label>
-            <select asp-for="FilmeId" class="form-select" asp-items="Model.Filmes">
-                <option value="">-- Selecione um filme --</option>
-            </select>
-            <span asp-validation-for="FilmeId" class="text-danger"></span>
+        <div class="card-body">
+            <div class="mb-3">
+                <label asp-for="FilmeId" class="form-label">Filme</label>
+                <select asp-for="FilmeId" class="form-select bg-dark text-white border-secondary" asp-items="Model.Filmes">
+                    <option value="">Selecione um filme</option>
+                </select>
+                <span asp-validation-for="FilmeId" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="SalaId" class="form-label">Sala</label>
+                <select asp-for="SalaId" class="form-select bg-dark text-white border-secondary" asp-items="Model.Salas">
+                    <option value="">Selecione uma sala</option>
+                </select>
+                <span asp-validation-for="SalaId" class="text-danger small"></span>
+            </div>
+
+            <div class="row">
+                <div class="mb-3 col-md-6">
+                    <label asp-for="DataDeExibicao" class="form-label">Data de Exibição</label>
+                    <input asp-for="DataDeExibicao" type="date" class="form-control bg-dark text-white border-secondary" />
+                    <span asp-validation-for="DataDeExibicao" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-3 col-md-6">
+                    <label asp-for="HorarioDaSessao" class="form-label">Horário da Sessão</label>
+                    <input asp-for="HorarioDaSessao" type="time" class="form-control bg-dark text-white border-secondary" />
+                    <span asp-validation-for="HorarioDaSessao" class="text-danger small"></span>
+                </div>
+            </div>
         </div>
 
-        <div class="mb-3">
-            <label asp-for="SalaId" class="form-label">Sala</label>
-            <select asp-for="SalaId" class="form-select" asp-items="Model.Salas">
-                <option value="">-- Selecione uma sala --</option>
-            </select>
-            <span asp-validation-for="SalaId" class="text-danger"></span>
+        <div class="card-footer d-flex justify-content-end border-top">
+            <a asp-action="Listar" class="btn btn-outline-secondary me-2">
+                <i class="bi bi-x-circle me-1"></i> Cancelar
+            </a>
+            <button type="submit" class="btn btn-danger">
+                <i class="bi bi-save me-1"></i> Salvar
+            </button>
         </div>
-
-        <div class="mb-3">
-            <label asp-for="DataDeExibicao" class="form-label">Data de Exibição</label>
-            <input asp-for="DataDeExibicao" type="date" class="form-control" />
-            <span asp-validation-for="DataDeExibicao" class="text-danger"></span>
-        </div>
-
-        <div class="mb-3">
-            <label asp-for="HorarioDaSessao" class="form-label">Horário da Sessão</label>
-            <input asp-for="HorarioDaSessao" type="time" class="form-control" />
-            <span asp-validation-for="HorarioDaSessao" class="text-danger"></span>
-        </div>
-
-        <button type="submit" class="btn btn-primary">Salvar</button>
-        <a asp-action="Listar" class="btn btn-secondary">Cancelar</a>
     </form>
 </div>

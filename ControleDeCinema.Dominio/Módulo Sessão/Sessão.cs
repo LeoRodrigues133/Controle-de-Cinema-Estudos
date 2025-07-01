@@ -14,21 +14,24 @@ public class Sessão : EntidadeBase
         SalaId = salaId;
         DataDeExibicao = dataDeExibicao;
         HorarioDaSessao = horaDeExibicao;
-
         Assentos = new List<Assento>();
         HorarioDaSessao = horaDeExibicao;
     }
 
     private bool _finalizada;
-    public bool Finalizada {
+    public bool Finalizada
+    {
         get
         {
-            return _finalizada || HorarioDaSessao.Add(TimeSpan.FromMinutes(Convert.ToDouble(Filme.Duracao))) < DateTime.Now.TimeOfDay;
+            if (_finalizada) return true;
 
+            if (Filme is null) return false;
 
+            var fimDaSessao = DataDeExibicao.Date + HorarioDaSessao + TimeSpan.FromMinutes(Convert.ToDouble(Filme.Duracao));
+            return fimDaSessao < DateTime.Now;
         }
         set => _finalizada = value;
-        }
+    }
 
     public int FilmeId { get; set; }
     public int SalaId { get; set; }
@@ -60,7 +63,8 @@ public class Sessão : EntidadeBase
             Assento novoAssento = new Assento
             {
                 Numero = GerarNumeroAssento(i),
-                Sessao = this
+                Sessao = this,
+                EmpresaId = this.EmpresaId
             };
             this.Assentos.Add(novoAssento);
         }

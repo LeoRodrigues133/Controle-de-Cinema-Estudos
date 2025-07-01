@@ -1,25 +1,41 @@
 ﻿@model LoginViewModel
+
 @{
     ViewBag.Title = "Login";
+    Layout = "_Layout";
 }
 
-<div class="container mt-5 text-white">
-    <h2 class="text-white">Entrar</h2>
-    <form asp-action="Login" method="post" class="mt-3">
-        <div class="mb-3">
-            <label asp-for="Usuario" class="form-label"></label>
-            <input asp-for="Usuario" class="form-control" />
-            <span asp-validation-for="Usuario" class="text-danger"></span>
+<div class="card bg-dark text-white shadow-sm border-0 mt-5 mx-auto" style="max-width: 500px;">
+    <form asp-action="Login" method="post">
+        <div class="card-body">
+            <div class="mb-3">
+                <label asp-for="Usuario" class="form-label">Usuário</label>
+                <input asp-for="Usuario" class="form-control bg-dark text-white border-secondary" />
+                <span asp-validation-for="Usuario" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Senha" class="form-label">Senha</label>
+                <input asp-for="Senha" type="password" class="form-control bg-dark text-white border-secondary" />
+                <span asp-validation-for="Senha" class="text-danger small"></span>
+            </div>
+
+            <div class="form-check mb-3">
+                <input asp-for="lembrarMe" class="form-check-input" />
+                <label asp-for="lembrarMe" class="form-check-label">Lembrar-me</label>
+            </div>
         </div>
-        <div class="mb-3">
-            <label asp-for="Senha" class="form-label"></label>
-            <input asp-for="Senha" class="form-control" />
-            <span asp-validation-for="Senha" class="text-danger"></span>
+
+        <div class="card-footer d-flex justify-content-end border-top">
+            <button type="submit" class="btn btn-danger">
+                <i class="bi bi-box-arrow-in-right me-1"></i> Entrar
+            </button>
         </div>
-        <div class="form-check mb-3">
-            <input asp-for="lembrarMe" class="form-check-input" />
-            <label asp-for="lembrarMe" class="form-check-label"></label>
-        </div>
-        <button type="submit" class="btn btn-danger">Entrar</button>
     </form>
 </div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
