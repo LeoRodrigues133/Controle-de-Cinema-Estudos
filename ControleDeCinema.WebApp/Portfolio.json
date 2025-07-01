@@ -1,4 +1,5 @@
 ﻿{
-  "title": "Projeto Portfólio",
-  "description": "Aplicação de gestão de cinemas desenvolvida em C# e .NET, com controle de filmes, sessões, salas e venda de ingressos."
+  "title": "Controle de Cinema",
+  "description": "Sistema web para gerenciamento de sessões de cinema com organização de filmes, salas, categorias e controle de exibição.",
+  "gif": ""
 }
