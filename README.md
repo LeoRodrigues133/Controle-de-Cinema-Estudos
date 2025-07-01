@@ -92,6 +92,6 @@ Este projeto é distribuído sob a licença MIT. Veja o arquivo LICENSE para mai
 
 ## Demonstração
 
-![Demonstração do sistema]([https://github.com/leorodrigues133/controle-de-cinema/blob/main/ControleDeCinema.WebApp/wwwroot/img/apresentacao.gif](https://github.com/LeoRodrigues133/Controle-de-Cinema-Estudos/blob/master/ControleDeCinema.WebApp/wwwroot/img/apresentacao.gif)?raw=true)
+![Demonstração do sistema](ControleDeCinema.WebApp/wwwroot/img/apresentacao.gif?raw=true)
 
 ---
